@@ -236,22 +236,37 @@
     .screen.active{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;overflow-y:auto}
   }
 
-  /* Звичайні/високі телефони: більший контент, щоб компактно заповнити екран */
+  /* Звичайні/високі телефони: контент трохи більший, але компактний — щоб усе інтро
+     влазило БЕЗ скролу (враховано підзаголовок + рейтинг). */
   @media (max-width:560px) and (min-height:680px){
-    h1.intro-h1{font-size:31px;line-height:1.16;margin-bottom:22px}
-    .bullets{gap:11px;max-width:360px;margin-bottom:10px}
-    .bullets li{font-size:17.5px;padding-left:32px}
-    .bullets li::before{font-size:18px}
-    .divider{font-size:11.5px;letter-spacing:.05em;margin:8px 0 20px;white-space:nowrap}
-    .vid{aspect-ratio:1/1.46}
-    .vid .cap b{font-size:14.5px}
-    .vid .cap span{font-size:12.5px}
-    .videos{gap:12px;margin-bottom:20px}
-    .bonus{padding:15px 16px;margin-bottom:20px}
-    .bonus-tx{font-size:15px}
-    .bonus-ic{font-size:34px}
-    .btn{font-size:20px;padding:21px}
-    .foot{font-size:15px;margin-top:18px}
+    h1.intro-h1{font-size:27px;line-height:1.15;margin-bottom:9px}
+    .intro-sub{font-size:14.5px;margin-bottom:11px}
+    .bullets{gap:7px;max-width:360px;margin-bottom:9px}
+    .bullets li{font-size:16px;padding-left:30px}
+    .bullets li::before{font-size:16px}
+    .divider{font-size:11px;letter-spacing:.04em;margin:4px 0 9px}
+    .rating{margin-bottom:9px}
+    .rating .rstars{font-size:14px}
+    .rating .rtext{font-size:12.5px}
+    .vid{aspect-ratio:1/1.22}
+    .vid .cap b{font-size:13.5px}
+    .vid .cap span{font-size:11.5px}
+    .videos{gap:10px;margin-bottom:11px}
+    .bonus{padding:11px 14px;margin-bottom:11px}
+    .bonus-tx{font-size:14px}
+    .bonus-ic{font-size:29px}
+    .btn{font-size:19px;padding:17px}
+    .foot{font-size:13.5px;margin-top:11px}
+  }
+
+  /* Дуже високі телефони (Pro Max тощо) — трохи повітря, місця вистачає */
+  @media (max-width:560px) and (min-height:850px){
+    h1.intro-h1{font-size:29px;margin-bottom:12px}
+    .bullets{gap:9px;margin-bottom:12px}
+    .bullets li{font-size:17px}
+    .videos{margin-bottom:14px}
+    .bonus{margin-bottom:14px}
+    .btn{padding:19px}
   }
 </style>
 </head>
