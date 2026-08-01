@@ -10,6 +10,10 @@
 <meta property="og:description" content="Пройди тест — і отримай план під себе." />
 <meta property="og:type" content="website" />
 
+<!-- Прискорює підключення до пікселя Facebook, щоб він не змагався за канал з картинками -->
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+<link rel="dns-prefetch" href="https://connect.facebook.net" />
+
 <!-- ============================================================= -->
 <!--  META PIXEL (FACEBOOK) — БАЗОВИЙ КОД                           -->
 <!--  ✅ Pixel ID: 1387966702869520 (вже вставлено нижче)          -->
@@ -272,7 +276,7 @@
 </head>
 <body>
 
-<div class="card">
+<main class="card">
 
   <div class="progress" id="progress">
     <div class="progress-top">
@@ -306,7 +310,7 @@
       <button class="vid" type="button" data-src="videos/video1.mp4">
         <picture>
           <source srcset="videos/poster1.webp" type="image/webp">
-          <img src="videos/poster1.jpg" alt="Відгук: Альона, 45, Кулінарія" loading="lazy" width="200" height="260">
+          <img src="videos/poster1.jpg" alt="Відгук: Альона, 45, Кулінарія" fetchpriority="high" decoding="async" width="200" height="260">
         </picture>
         <div class="veil"></div>
         <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
@@ -316,7 +320,7 @@
       <button class="vid" type="button" data-src="videos/video2.mp4">
         <picture>
           <source srcset="videos/poster2.webp" type="image/webp">
-          <img src="videos/poster2.jpg" alt="Відгук: Тетяна, 54, Лайф-коуч" loading="lazy" width="200" height="260">
+          <img src="videos/poster2.jpg" alt="Відгук: Тетяна, 54, Лайф-коуч" fetchpriority="high" decoding="async" width="200" height="260">
         </picture>
         <div class="veil"></div>
         <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
@@ -326,7 +330,7 @@
       <button class="vid" type="button" data-src="videos/video3.mp4">
         <picture>
           <source srcset="videos/poster3.webp" type="image/webp">
-          <img src="videos/poster3.jpg" alt="Відгук: Оксана, 50, Вчитель мови" loading="lazy" width="200" height="260">
+          <img src="videos/poster3.jpg" alt="Відгук: Оксана, 50, Вчитель мови" fetchpriority="high" decoding="async" width="200" height="260">
         </picture>
         <div class="veil"></div>
         <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
@@ -433,7 +437,7 @@
     </div>
   </section>
 
-</div>
+</main>
 
 <div class="modal" id="modal">
   <button class="x" id="modalX" type="button">✕</button>
