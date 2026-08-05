@@ -1,9 +1,10 @@
-// Vercel Serverless Function — приймає заявку з форми та надсилає її в Telegram.
+// Vercel Serverless Function — приймає заявку з квіза й надсилає в Telegram.
+// Розводить дві гілки:
+//   type:'paid' — гаряча заявка (пройшла фільтр Q3), телефон АБО нік
+//   type:'free' — холодний контакт із безкоштовної гілки (нижчий пріоритет у CRM)
 //
-// Токен і chat_id вже вписані нижче як значення за замовчуванням.
-// Безпечніше тримати їх у Environment Variables Vercel
-// (Settings → Environment Variables: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID),
-// але якщо їх не задати — використаються значення нижче.
+// Ключі краще тримати в Environment Variables Vercel:
+//   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 
 const DEFAULT_TOKEN = '8090010233:AAGucMxosOir1f7ttPIUODULMbO2DYoqTHU';
 const DEFAULT_CHAT_ID = '-4934715371';
@@ -15,16 +16,30 @@ export default async function handler(req, res) {
 
   const token = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID || DEFAULT_CHAT_ID;
-
   const d = req.body || {};
-  const text =
-    '🔥 Нова заявка з квіза TikTok\n\n' +
-    `👤 Імʼя: ${d.name || '—'}\n` +
-    `📱 Телефон: ${d.phone || '—'}\n` +
-    `🌍 Країна: ${d.country || '—'}\n\n` +
-    `1️⃣ Етап у TikTok: ${d.q1 || '—'}\n` +
-    `2️⃣ Ціль: ${d.q2 || '—'}\n` +
-    `3️⃣ Інвестиції: ${d.q3 || '—'}`;
+
+  let text;
+  if (d.type === 'free') {
+    // ❄️ ХОЛОДНА заявка — безкоштовна гілка, нижчий пріоритет
+    text =
+      '❄️ ХОЛОДНИЙ ЛІД · безкоштовна гілка\n\n' +
+      `✈️ Telegram: ${d.tg || '—'}\n\n` +
+      `1️⃣ Етап: ${d.q1 || '—'}\n` +
+      `2️⃣ Ціль: ${d.q2 || '—'}\n` +
+      `3️⃣ Q3: ${d.q3 || '—'}\n\n` +
+      '➡️ Надіслати відеоурок. НЕ вести як гарячого.';
+  } else {
+    // 🔥 ГАРЯЧА заявка — пройшла фільтр Q3
+    text =
+      '🔥 ГАРЯЧА ЗАЯВКА з квіза TikTok\n\n' +
+      `👤 Імʼя: ${d.name || '—'}\n` +
+      `📱 Телефон: ${d.phone || '—'}\n` +
+      `✈️ Telegram: ${d.tg || '—'}\n` +
+      `🌍 Країна: ${d.country || '—'}\n\n` +
+      `1️⃣ Етап у TikTok: ${d.q1 || '—'}\n` +
+      `2️⃣ Ціль: ${d.q2 || '—'}\n` +
+      `3️⃣ Інвестиції: ${d.q3 || '—'}`;
+  }
 
   if (!token || !chatId) {
     return res.status(200).json({ ok: true, note: 'Telegram не налаштований' });

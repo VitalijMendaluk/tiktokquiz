@@ -11,6 +11,7 @@
 <meta property="og:type" content="website" />
 
 <!-- Прискорює підключення до пікселя Facebook, щоб він не змагався за канал з картинками -->
+<link rel="canonical" href="https://tiktokquiz-xi.vercel.app/" />
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
 <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
@@ -112,7 +113,8 @@
   @keyframes beamSpin{to{--beamA:360deg}}
 
   /* Легке «дихання» головної кнопки — привертає увагу, не заважає натисканню */
-  #startBtn{animation:ctaPulse 1.9s ease-in-out infinite}
+  #startBtn,#submitBtn{animation:ctaPulse 1.9s ease-in-out infinite}
+  #startBtn{margin-bottom:14px}
   @keyframes ctaPulse{
     0%,100%{box-shadow:0 12px 24px -8px rgba(124,92,252,.55)}
     50%{box-shadow:0 14px 32px -6px rgba(124,92,252,.9)}
@@ -122,7 +124,7 @@
   .vid::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:3;pointer-events:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
 
   @media (prefers-reduced-motion:reduce){
-    .beam::after,.bonus-num,.bonus-ic,#startBtn{animation:none}
+    .beam::after,.bonus-num,.bonus-ic,#startBtn,#submitBtn{animation:none}
   }
 
   /* ВІДГУКИ */
@@ -183,6 +185,8 @@
   .agree input{width:20px;height:20px;flex-shrink:0;accent-color:var(--violet);margin-top:1px}
   .agree a{color:var(--violet);text-decoration:underline}
   .privacy{text-align:center;color:#9A9AAE;font-size:12.5px;margin-top:14px;line-height:1.4}
+  .form-note{text-align:center;color:#5a5a72;font-size:13.5px;font-weight:600;margin-top:13px;line-height:1.4}
+  .form-note b{color:var(--violet-dark);font-weight:800}
 
   /* ПОДЯКА / TELEGRAM */
   .center{text-align:center;padding:10px 4px}
@@ -228,12 +232,17 @@
     .bonus-ic{font-size:26px}
     .bonus-tx{font-size:13px}
     .btn{padding:15px;font-size:17px}
+    #startBtn{margin-bottom:10px}
     .foot{margin-top:9px;font-size:13px}
     /* форма теж компактніше */
     .q-title{font-size:21px}
-    .q-hint{margin-bottom:14px}
-    .field{margin-bottom:11px}
-    .field input[type=text],.field input[type=tel],.dial{padding-top:13px;padding-bottom:13px}
+    .q-hint{margin-bottom:12px}
+    .field{margin-bottom:9px}
+    .field input[type=text],.field input[type=tel],.dial{padding-top:12px;padding-bottom:12px}
+    /* на малому екрані картка-відгук компактніша, щоб форма влізла без скролу */
+    .card .review-card{padding:9px 12px;margin-bottom:13px}
+    .card .review-card img{width:50px;height:50px}
+    .card .review-metric{font-size:14px}
   }
 
   /* МОБІЛЬНИЙ: квіз на ВЕСЬ екран телефону (під діагональ), без сірої рамки */
@@ -281,6 +290,14 @@
     .bonus{margin-bottom:14px}
     .btn{padding:19px}
   }
+  /* Компактна картка-відгук на формі — зчитується за секунду: фото + зірки + ім'я + цифра */
+  .review-card{display:flex;align-items:center;gap:13px;background:var(--violet-soft);border-radius:16px;padding:12px 14px;margin-bottom:18px}
+  .review-card img{width:56px;height:56px;border-radius:14px;object-fit:cover;flex-shrink:0}
+  .review-txt{min-width:0}
+  .review-stars{color:#FFB400;font-size:13px;letter-spacing:2px;line-height:1;margin-bottom:5px}
+  .review-name{font-size:13px;font-weight:600;color:#5a5a72;line-height:1.3}
+  .review-name b{color:var(--ink);font-weight:800}
+  .review-metric{font-size:14.5px;font-weight:800;color:var(--violet-dark);line-height:1.25;margin-top:3px}
 </style>
 </head>
 <body>
@@ -347,12 +364,12 @@
       </button>
     </div>
 
+    <button class="btn beam" id="startBtn" type="button">Отримати свій план →</button>
+
     <div class="bonus">
       <div class="bonus-ic">🎁</div>
       <div class="bonus-tx"><b>Відеоурок у&nbsp;подарунок:</b> як упакувати профіль, щоб він приводив заявки</div>
     </div>
-
-    <button class="btn beam" id="startBtn" type="button">Отримати свій план →</button>
     <p class="foot">⏱ <b>3 питання</b> · займе 30 секунд</p>
   </section>
 
@@ -385,17 +402,26 @@
     <div class="q-title">За нашим досвідом, результат потребує вкладень.<br>Готова/ий інвестувати час і гроші у свій TikTok?</div>
     <div class="q-hint">Перший крок — безкоштовна консультація. Далі, за бажанням, платне навчання під твій бюджет 🙌</div>
     <div class="options" data-q="q3">
-      <button class="opt" data-route="form" data-val="Готова діяти заради результату"><span class="ic">🚀</span> Так, я готова/ий діяти заради результату</button>
-      <button class="opt" data-route="form" data-val="Готова, якщо є розстрочка"><span class="ic">💳</span> Так, якщо буде зручна розстрочка</button>
-      <button class="opt" data-route="tg" data-val="Цікавить лише безкоштовне"><span class="ic">🆓</span> Ні, поки цікавить лише безкоштовне</button>
+      <button class="opt" data-route="form" data-track="paid_1" data-val="Готова діяти заради результату"><span class="ic">🚀</span> Так, я готова/ий діяти заради результату</button>
+      <button class="opt" data-route="form" data-track="paid_2" data-val="Готова, якщо є розстрочка"><span class="ic">💳</span> Так, якщо буде зручна розстрочка</button>
+      <button class="opt" data-route="tg" data-track="free" data-val="Цікавить лише безкоштовне"><span class="ic">🌱</span> Ні, поки цікавить лише безкоштовне</button>
     </div>
   </section>
 
   <!-- ========== ФОРМА КОНТАКТУ (гілка «готовий інвестувати») ========== -->
   <section class="screen" data-screen="form">
     <div class="q-title">Покроковий план, як отримати перших клієнтів з&nbsp;TikTok за 30 днів 🔥</div>
-    <div class="q-hint">Допоміг 130+ людям отримати клієнтів з TikTok. Беру тільки 5 людей на тиждень.</div>
-    <div class="match-quote" id="matchQuote"></div>
+    <div class="review-card">
+      <picture>
+        <source srcset="videos/poster3.webp" type="image/webp">
+        <img src="videos/poster3.jpg" alt="Оксана, 50" width="56" height="56" loading="lazy" decoding="async">
+      </picture>
+      <div class="review-txt">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-name"><b>Оксана, 50</b> · вчитель мови та літератури</div>
+        <div class="review-metric">Перша заявка на 9-й день</div>
+      </div>
+    </div>
 
     <form id="leadForm" novalidate>
       <div class="field">
@@ -408,7 +434,11 @@
           <select id="dial" class="dial" aria-label="Код країни"></select>
           <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="xx xxx xxxx" />
         </div>
-        <div class="err-msg" id="phoneErr">Будь ласка, вкажіть коректний номер телефону</div>
+        <div class="err-msg" id="phoneErr">Вкажіть телефон або @нік у Telegram — досить одного</div>
+      </div>
+      <div class="field">
+        <label for="tguser">або @нік у Telegram</label>
+        <input id="tguser" name="tguser" type="text" autocomplete="username" placeholder="@нік" />
       </div>
 
       <label class="agree">
@@ -418,19 +448,35 @@
       <div class="err-msg" id="agreeErr" style="margin-top:2px">Потрібна згода, щоб надіслати заявку</div>
 
       <button class="btn" type="submit" id="submitBtn" style="margin-top:18px">Отримати свій план →</button>
-      <p class="privacy">На безкоштовній консультації розберемо твою ситуацію і складемо план. Далі — за бажанням платне наставництво. Я звʼяжуся особисто, без спаму.</p>
+      <p class="form-note">Беру <b>5 людей на тиждень</b> · перша консультація <b>безкоштовна</b></p>
     </form>
   </section>
 
-  <!-- ========== TELEGRAM (гілка «не готовий вкладати») ========== -->
+  <!-- ========== БЕЗКОШТОВНА ГІЛКА: захоплення ніку ========== -->
   <section class="screen" data-screen="tg">
     <div class="center">
       <div class="mark">🎁</div>
-      <h2>Тримай корисний бонус!</h2>
-      <p>Забирай <b>відеоурок</b> — як упакувати профіль, щоб він приводив заявки. Безкоштовно.</p>
-      <p>Напиши мені в Telegram — і я одразу надішлю 👇</p>
-      <a class="btn" id="tgBtn" href="#" target="_blank" rel="noopener" style="margin-top:20px">Написати мені в Telegram →</a>
-      <p class="privacy" style="margin-top:14px">Безкоштовно · можна вийти будь-коли</p>
+      <h2>Куди надіслати твій подарунок?</h2>
+      <p>Відеоурок скину прямо в Telegram</p>
+      <form id="freeForm" novalidate style="text-align:left;margin-top:16px">
+        <div class="field">
+          <input id="freeTg" name="freeTg" type="text" autocomplete="username" placeholder="@твій нік у Telegram" />
+          <div class="err-msg" id="freeErr">Вкажи свій нік у Telegram</div>
+        </div>
+        <button class="btn" type="submit">Забрати відеоурок →</button>
+      </form>
+      <p class="privacy" style="margin-top:14px">Безкоштовно · без спаму</p>
+    </div>
+  </section>
+
+  <!-- ========== ПІДТВЕРДЖЕННЯ БЕЗКОШТОВНОЇ ГІЛКИ ========== -->
+  <section class="screen" data-screen="freedone">
+    <div class="center">
+      <div class="mark">✅</div>
+      <h2>Готово!</h2>
+      <p>Відеоурок надішлю тобі в Telegram найближчим часом 🎁</p>
+      <a class="btn" id="freeTgBtn" href="#" target="_blank" rel="noopener" style="margin-top:18px">✈️ Відкрити Telegram</a>
+      <p class="privacy" style="margin-top:14px">Можеш закривати сторінку</p>
     </div>
   </section>
 
@@ -457,16 +503,13 @@
 /* =========================================================
    ⚙️ НАЛАШТУВАННЯ — заміни посилання на свій Telegram-канал
    ========================================================= */
-const TG_CHANNEL  = 'https://t.me/vmendaliuk';   // гілка «не готовий вкладати» (постав КАНАЛ, якщо він окремий)
-const TG_PERSONAL = 'https://t.me/vmendaliuk';   // кнопка на екрані подяки — твій особистий акаунт
+const TG_PERSONAL = 'https://t.me/vmendaliuk';   // твій особистий акаунт (кнопки подяки і бонусу)
 
-// Прев'ю-текст, який одразу з'являється в полі вводу Telegram при відкритті чату
-// (працює тільки для посилань на ОСОБИСТИЙ акаунт, не на канал — якщо TG_CHANNEL стане
-// реальним каналом (t.me/назва_каналу), видали ?text= з рядка нижче для tgBtn).
 const TG_TEXT_BONUS = 'Привіт! Хочу забрати відеоурок про упаковку профілю 🎁';
 const TG_TEXT_PERSONAL = 'Привіт! Щойно пройшла(ов) квіз на сайті, хочу домовитись про консультацію 🚀';
-document.getElementById('tgBtn').href = TG_CHANNEL + '?text=' + encodeURIComponent(TG_TEXT_BONUS);
 document.getElementById('tyTgBtn').href = TG_PERSONAL + '?text=' + encodeURIComponent(TG_TEXT_PERSONAL);
+const _freeTgBtn = document.getElementById('freeTgBtn');
+if(_freeTgBtn) _freeTgBtn.href = TG_PERSONAL + '?text=' + encodeURIComponent(TG_TEXT_BONUS);
 
 /* Точна висота видимого екрана для ВСІХ браузерів (Chrome mobile, Instagram/Facebook in-app тощо),
    бо dvh/vh у вбудованих браузерах рахуються неправильно і дають великі прольоти */
@@ -510,28 +553,16 @@ function go(name){
 }
 window.addEventListener('hashchange', ()=> render((location.hash || '#intro').slice(1)));
 
-document.getElementById('startBtn').addEventListener('click', ()=>go('q1'));
+let quizStarted = false;
+function startQuiz(){
+  if(!quizStarted){ quizStarted = true; if(typeof fbq === 'function') fbq('trackCustom', 'QuizStart'); }
+  go('q1');
+}
+document.getElementById('startBtn').addEventListener('click', startQuiz);
 document.getElementById('backBtn').addEventListener('click', ()=> history.back());
 
 // Стартовий екран за поточним hash (або інтро)
 render((location.hash || '#intro').slice(1));
-
-/* Підбір релевантної цитати під ціль, обрану в Q2 (показується на екрані форми).
-   Для ніш з реальними відео-відгуками — конкретне імʼя. Для ніш без відео (MLM,
-   Інше) — тайлорована, але не вигадана "з іменем", фраза, щоб не видавати
-   вигаданого свідчення за реальний кейс конкретної людини. */
-const Q2_MATCH = {
-  'Клієнтів на послуги':          '✨ Тетяна, 54 (Лайф-коуч) вже отримала перших клієнтів з TikTok — так само, як хочеш ти',
-  'Продажі товарів':              '✨ Альона, 45 (Кулінарія) вже продає через TikTok — так само можеш і ти',
-  'Мережевий бізнес / Бади':      '✨ Ольга, 47 (мережевий бізнес) вже отримує клієнтів і залучає людей у команду через TikTok — так само, як хочеш ти',
-  'Просування особистого бренду': '✨ Оксана, 50 (Вчитель мови) вже прокачала особистий бренд через TikTok — так само, як хочеш ти',
-  'Інше':                         '✨ 130+ учнів вже отримують результати з TikTok'
-};
-function updateMatchQuote(){
-  const el = document.getElementById('matchQuote');
-  el.textContent = Q2_MATCH[answers.q2] || '✨ 130+ учнів вже отримують результати з TikTok';
-  el.style.display = 'block';
-}
 
 /* Вибір відповіді */
 document.querySelectorAll('.options').forEach(group=>{
@@ -541,9 +572,16 @@ document.querySelectorAll('.options').forEach(group=>{
       opt.classList.add('sel');
       answers[group.dataset.q] = opt.dataset.val;
 
+      // Подія пікселя на кожне питання (з параметром обраного варіанту).
+      // Для Q3 параметр — paid_1 / paid_2 / free (data-track), щоб рахувати ціну фільтра.
+      const qEvent = { q1:'Question_1', q2:'Question_2', q3:'Question_3' }[group.dataset.q];
+      if(qEvent && typeof fbq === 'function'){
+        const answerParam = group.dataset.q === 'q3' ? (opt.dataset.track || '') : opt.dataset.val;
+        fbq('trackCustom', qEvent, { answer: answerParam });
+      }
+
       if(group.dataset.q === 'q3'){
         const route = opt.dataset.route; // 'form' | 'tg'
-        if(route !== 'tg') updateMatchQuote();
         setTimeout(()=> go(route === 'tg' ? 'tg' : 'form'), 260);
       } else {
         const nextScreen = group.dataset.q === 'q1' ? 'q2' : 'q3';
@@ -551,12 +589,6 @@ document.querySelectorAll('.options').forEach(group=>{
       }
     });
   });
-});
-
-document.getElementById('tgBtn').addEventListener('click', ()=>{
-  // Це НЕ лід — людина сказала, що поки не готова інвестувати.
-  // Тільки трекінг кліку в Telegram, без відправки заявки в /api/lead.
-  if(typeof fbq === 'function') fbq('trackCustom', 'TelegramClick');
 });
 
 /* =========================================================
@@ -614,34 +646,44 @@ const phoneErr = document.getElementById('phoneErr');
 const agree = document.getElementById('agree');
 const agreeErr = document.getElementById('agreeErr');
 
+const tguserInput = document.getElementById('tguser');
+let leadFired = false;
+
 form.addEventListener('submit', async (e)=>{
   e.preventDefault();
-  let ok = true;
 
-  // Телефон: мінімум 6 цифр
+  // Контакт: телефон АБО нік у Telegram — досить одного з двох
   const national = phoneInput.value.replace(/\D/g,'');
-  if(national.length < 6){
+  const nick = tguserInput.value.trim();
+  const hasPhone = national.length >= 6;
+  const hasNick  = nick.replace(/[@\s]/g,'').length >= 2;
+
+  let ok = true;
+  if(!hasPhone && !hasNick){
     phoneInput.classList.add('err'); phoneErr.classList.add('on'); ok = false;
   } else { phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); }
 
-  // Згода
   if(!agree.checked){ agreeErr.classList.add('on'); ok = false; }
   else { agreeErr.classList.remove('on'); }
 
   if(!ok) return;
+  if(leadFired) return;   // Lead рівно 1 раз, без дублів
 
   const selOpt = dial.options[dial.selectedIndex];
   const dialCode = selOpt ? selOpt.dataset.dial : '';
 
   answers.name = document.getElementById('name').value.trim() || '—';
-  answers.phone = `${dialCode} ${phoneInput.value.trim()}`;
+  answers.phone = hasPhone ? `${dialCode} ${phoneInput.value.trim()}` : '—';
+  answers.tg = hasNick ? (nick[0]==='@'?nick:'@'+nick) : '—';
   answers.country = dial.value.toUpperCase();
+  answers.type = 'paid';
 
   // ⭐ КЛЮЧОВЕ: подія Lead саме в момент відправки форми.
   // Форму бачать ТІЛЬКИ ті, хто готовий платити або хоче розстрочку —
   // халявщики йдуть на екран Telegram і Lead не викликають зовсім.
   // value відрізняє "гарячого" ліда від "розстрочки", щоб Meta шукала більше платоспроможних.
   // 👉 За бажанням заміни 2 і 1 на реальну очікувану цінність ліда (напр. середній чек × конверсію).
+  leadFired = true;
   if(typeof fbq === 'function'){
     const leadValue = answers.q3 === 'Готова діяти заради результату' ? 2 : 1;
     fbq('track', 'Lead', {
@@ -667,6 +709,28 @@ form.addEventListener('submit', async (e)=>{
 });
 
 phoneInput.addEventListener('input', ()=>{ phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); });
+tguserInput.addEventListener('input', ()=>{ phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); });
+
+/* Безкоштовна гілка: захоплюємо нік → подія FreeLead (окрема, НЕ Lead) */
+const freeForm = document.getElementById('freeForm');
+if(freeForm){
+  const freeTg = document.getElementById('freeTg');
+  const freeErr = document.getElementById('freeErr');
+  let freeLeadFired = false;
+  freeForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const nick = freeTg.value.trim();
+    if(nick.replace(/[@\s]/g,'').length < 2){ freeErr.classList.add('on'); return; }
+    freeErr.classList.remove('on');
+    if(freeLeadFired) return;
+    freeLeadFired = true;
+    if(typeof fbq === 'function') fbq('trackCustom', 'FreeLead');
+    const payload = { type:'free', tg: nick[0]==='@'?nick:'@'+nick, q1: answers.q1, q2: answers.q2, q3: answers.q3 };
+    go('freedone');
+    try{ await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); }catch(err){}
+  });
+  freeTg.addEventListener('input', ()=> freeErr.classList.remove('on'));
+}
 agree.addEventListener('change', ()=>{ if(agree.checked) agreeErr.classList.remove('on'); });
 
 /* =========================================================
