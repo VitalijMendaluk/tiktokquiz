@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Знаходь клієнтів через TikTok за кордоном — безкоштовна консультація</title>
-<meta name="description" content="Пройди тест за 30 секунд — і отримай план, як знаходити клієнтів через TikTok, живучи за кордоном." />
-
-<meta property="og:title" content="Знаходь клієнтів через TikTok за кордоном" />
-<meta property="og:description" content="Пройди тест — і отримай план під себе." />
+<title>Клієнти з TikTok за кордоном — безкоштовний персональний розбір</title>
+<meta name="description" content="Персональний розбір + покроковий план, як отримувати клієнтів з TikTok за кордоном. Без блогу, без бюджету на рекламу, навіть з нуля." />
+<meta property="og:title" content="Клієнти з TikTok за кордоном — безкоштовний розбір" />
+<meta property="og:description" content="Залиш заявку за 30 секунд — і запишись на безкоштовний персональний розбір своєї ситуації." />
 <meta property="og:type" content="website" />
 
-<!-- Прискорює підключення до пікселя Facebook, щоб він не змагався за канал з картинками -->
 <link rel="canonical" href="https://tiktokquiz-xi.vercel.app/" />
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
 <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
 <!-- ============================================================= -->
-<!--  META PIXEL (FACEBOOK) — БАЗОВИЙ КОД                           -->
-<!--  ✅ Pixel ID: 1071215118812769 (вже вставлено нижче)          -->
-<!--  Подія Lead спрацьовує при відправці форми (див. leadForm).   -->
+<!--  META PIXEL — PageView шле ЛЕНДИНГ. QuizStart/Question/Lead    -->
+<!--  шле квіз усередині попапа (quiz.html), той самий Pixel ID.    -->
 <!-- ============================================================= -->
 <script>
   !function(f,b,e,v,n,t,s)
@@ -36,724 +33,485 @@
   <img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1071215118812769&ev=PageView&noscript=1"/>
 </noscript>
-<!-- ===================  КІНЕЦЬ КОДУ ПІКСЕЛЯ  =================== -->
 
 <style>
   :root{
-    --violet:#7C5CFC;
-    --violet-dark:#6A47F0;
-    --violet-soft:#EDE9FF;
-    --ink:#1C1C2E;
-    --gray:#6B7280;
-    --line:#ECECF1;
+    --bg:#0A0A12;
+    --bg2:#12121D;
     --card:#FFFFFF;
-    --radius:26px;
-    --shadow:0 24px 60px -20px rgba(54,40,120,.28);
+    --ink:#141422;
+    --gray:#5C5C72;
+    --line:rgba(255,255,255,.10);
+    --cyan:#25F4EE;
+    --red:#FE2C55;
+    --gold:#E8C066;
+    --grad:linear-gradient(90deg,#25F4EE 0%,#8A6BFF 48%,#FE2C55 100%);
+    --grad-soft:linear-gradient(90deg,rgba(37,244,238,.16),rgba(254,44,85,.16));
+    --radius:22px;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:#E9E9F0;color:var(--ink);display:flex;align-items:center;justify-content:center;
-    min-height:100dvh;padding:18px 14px;line-height:1.45;-webkit-font-smoothing:antialiased;
+    background:var(--bg);color:#fff;line-height:1.5;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
-  .card{
-    width:100%;max-width:460px;background:var(--card);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:46px 26px 38px;position:relative;overflow:hidden;
-  }
-  .grip{width:54px;height:5px;border-radius:99px;background:#D9D9E3;margin:0 auto 22px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  section{position:relative;padding:64px 0;overflow:hidden}
+  .sec-tight{padding:44px 0}
 
-  /* ПРОГРЕС */
-  .progress{display:none;margin-bottom:22px}
-  .progress.on{display:block}
-  .progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .progress-label{font-size:13px;font-weight:700;color:var(--gray);letter-spacing:.02em}
-  .progress-track{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-  .progress-fill{height:100%;width:0;background:var(--violet);border-radius:99px;transition:width .35s ease}
-  .back{background:none;border:none;color:var(--gray);font-size:14px;font-weight:600;cursor:pointer;padding:4px 2px}
-  .back:hover{color:var(--ink)}
+  /* ── Фонові світіння ── */
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;z-index:0;pointer-events:none}
+  .glow.cyan{background:#25F4EE}
+  .glow.red{background:#FE2C55}
+  .wrap,section > .wrap{position:relative;z-index:1}
 
-  /* ЕКРАНИ */
-  .screen{display:none;animation:fade .4s ease}
-  .screen.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  /* ── Заголовки ── */
+  h1,h2{font-weight:900;letter-spacing:-.01em;line-height:1.1}
+  h2{font-size:clamp(28px,5.6vw,40px);text-align:center;text-transform:uppercase}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#cfd0e6;
+    background:var(--grad-soft);border:1px solid var(--line);padding:8px 16px;border-radius:99px}
+  .lead{color:#D2D3E0;font-size:clamp(17px,2.4vw,19px);font-weight:500;line-height:1.55}
+  .sec-sub{color:#CFCFDB;text-align:center;max-width:640px;margin:14px auto 0;font-size:17px;line-height:1.55}
 
-  .eyebrow{text-align:center;color:var(--violet);font-weight:800;font-size:14px;letter-spacing:.14em;margin-bottom:14px;text-transform:uppercase}
-  h1{text-align:center;font-size:30px;line-height:1.18;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
-  h1 .hl{color:var(--violet)}
-  .sub{text-align:center;color:var(--gray);font-size:17px;margin-bottom:24px;padding:0 4px}
-
-  .divider{text-align:center;color:#9A9AAE;font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;margin:6px 0 14px}
-
-  /* ІНТРО: заголовок + булети + подарунок */
-  h1.intro-h1{font-size:clamp(22px,6.2vw,28px);margin-bottom:8px}
-  .intro-sub{text-align:center;color:var(--gray);font-size:15px;font-weight:600;line-height:1.35;max-width:340px;margin:0 auto 14px}
-  .bullets{list-style:none;max-width:340px;margin:0 auto 14px;display:flex;flex-direction:column;gap:7px}
-  .bullets li{position:relative;padding-left:28px;font-size:15.5px;font-weight:600;line-height:1.3;color:#33334d}
-  .bullets li::before{content:"✔";position:absolute;left:2px;top:0;color:var(--violet);font-weight:900}
-  /* Світла «купонна» плашка — навмисно НЕ схожа на кнопку (світлий фон, пунктир, темний текст) */
-  .bonus{display:flex;align-items:center;gap:12px;background:var(--violet-soft);color:var(--ink);border:1.5px dashed #B9A9FF;border-radius:16px;padding:12px 15px;margin-bottom:14px}
-  .bonus-ic{font-size:30px;flex-shrink:0;line-height:1;transform-origin:center bottom;animation:giftWobble 1.1s ease-in-out infinite}
-  @keyframes giftWobble{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
-  .bonus-tx{font-size:14px;font-weight:700;line-height:1.25}
-  .bonus-tx b{color:var(--violet-dark)}
-  .bonus-tag{display:block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:.9;margin-top:3px}
-  /* Легка пульсація цифри 30 */
-  .bonus-num{display:inline-block;transform-origin:center;animation:numPulse 1.5s ease-in-out infinite}
-  @keyframes numPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
-
-  /* Тоненька анімована обводка кнопки (border-beam) */
-  @property --beamA{syntax:'<angle>';inherits:false;initial-value:0deg}
-  .beam{position:relative;isolation:isolate}
-  .beam::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
-    background:conic-gradient(from var(--beamA), transparent 0 80%, rgba(255,255,255,.92) 90%, transparent 100%);
-    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    animation:beamSpin 3.4s linear infinite}
-  @keyframes beamSpin{to{--beamA:360deg}}
-
-  /* Легке «дихання» головної кнопки — привертає увагу, не заважає натисканню */
-  #startBtn,#submitBtn{animation:ctaPulse 1.9s ease-in-out infinite}
-  #startBtn{margin-bottom:14px}
+  /* ── Кнопка (фірмовий градієнт) ── */
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;
+    background:var(--grad);color:#fff;font-weight:800;font-size:18px;padding:18px 34px;min-height:54px;border-radius:99px;
+    box-shadow:0 14px 34px -10px rgba(254,44,85,.6),0 0 0 1px rgba(255,255,255,.06) inset;
+    text-decoration:none;transition:transform .12s ease,box-shadow .2s ease;position:relative;
+    animation:ctaPulse 2s ease-in-out infinite}
+  .cta:hover{filter:brightness(1.07)}
+  .cta:active{filter:brightness(.93)}
+  .cta.big{font-size:20px;padding:20px 40px}
+  /* Легка пульсація (масштаб + сяйво) — привертає увагу, не заважає натисканню */
   @keyframes ctaPulse{
-    0%,100%{box-shadow:0 12px 24px -8px rgba(124,92,252,.55)}
-    50%{box-shadow:0 14px 32px -6px rgba(124,92,252,.9)}
+    0%,100%{transform:scale(1);box-shadow:0 14px 34px -12px rgba(254,44,85,.5),0 0 0 1px rgba(255,255,255,.06) inset}
+    50%{transform:scale(1.028);box-shadow:0 20px 48px -8px rgba(37,244,238,.6),0 0 0 1px rgba(255,255,255,.12) inset}}
+  .cta-center{display:flex;justify-content:center;margin-top:36px}
+  .cta-note{text-align:center;color:#CFCFDB;font-size:15px;margin-top:12px;font-weight:600;line-height:1.5}
+  .cta-note b{color:#fff}
+  @media (prefers-reduced-motion:reduce){.cta,.gift .ic{animation:none}}
+
+  /* ── HERO ── */
+  .hero{padding-top:46px;padding-bottom:52px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .hero h1{font-size:clamp(30px,6vw,52px);margin:18px 0 16px}
+  .hero .lead{max-width:520px}
+  .hero-bul{list-style:none;margin:20px 0 22px;display:flex;flex-direction:column;gap:11px;max-width:540px}
+  .hero-bul li{position:relative;padding-left:34px;font-size:18px;font-weight:600;color:#EDEDF5;line-height:1.4}
+  .hero-bul li::before{content:"✓";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;
+    background:var(--grad);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 26px}
+  .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid var(--line);
+    border-radius:99px;padding:9px 15px;font-size:15px;font-weight:700;color:#eff0fa}
+  .chip .st{color:var(--gold)}
+  .hero-cta-row{display:flex;flex-direction:column;gap:0}
+  /* Відео/візуал справа */
+  .hero-media{position:relative}
+  .media-frame{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);
+    background:linear-gradient(160deg,#171728,#0d0d18);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 30px 80px -30px rgba(37,244,238,.35)}
+  .media-frame .ph-svg{width:100%;height:100%;position:absolute;inset:0}
+  .play-badge{position:relative;z-index:2;width:82px;height:82px;border-radius:50%;background:var(--grad);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -6px rgba(254,44,85,.6)}
+  .play-badge::before{content:"";border-style:solid;border-width:15px 0 15px 24px;border-color:transparent transparent transparent #fff;margin-left:5px}
+  .media-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;font-size:13px;font-weight:700;color:#dcdcf0;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.75))}
+  .media-tag{position:absolute;top:14px;left:14px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:#0A0A12;background:var(--cyan);padding:5px 10px;border-radius:8px}
+
+  /* ── Картки «для тебе» ── */
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}
+  .fit-card{background:linear-gradient(180deg,#15151F,#101018);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 20px;transition:transform .15s,border-color .2s}
+  .fit-card:hover{transform:translateY(-4px);border-color:rgba(37,244,238,.4)}
+  .fit-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;
+    background:var(--grad-soft);border:1px solid var(--line);margin-bottom:14px}
+  .fit-card p{color:#D3D4E4;font-size:17px;font-weight:600;line-height:1.45}
+
+  /* ── Відгуки ── */
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+  .rev-card{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1/1.16;border:1px solid var(--line);
+    background:#15151f;display:block;text-align:left;cursor:pointer;padding:0;width:100%;font:inherit;color:#fff;transition:transform .15s,border-color .2s}
+  .rev-card:hover{transform:translateY(-3px);border-color:rgba(37,244,238,.4)}
+  .rev-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .rev-card .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 42%,rgba(0,0,0,.72))}
+  .rev-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;
+    background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;z-index:2}
+  .rev-play::before{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #141422;margin-left:3px}
+  .rev-meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px 16px;color:#fff}
+  .rev-meta .st{color:var(--gold);font-size:12px;letter-spacing:1.5px}
+  .rev-meta b{display:block;font-size:18px;margin-top:2px}
+  .rev-meta span{font-size:14px;color:#e2e2ee}
+  .rev-btn-row{display:flex;justify-content:center;margin-top:26px}
+  .btn-ghost{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.22);
+    color:#fff;font-weight:800;font-size:17px;padding:16px 28px;min-height:52px;border-radius:99px;text-decoration:none;transition:background .2s,border-color .2s}
+  .btn-ghost:hover{background:rgba(255,255,255,.10);border-color:var(--cyan)}
+
+  /* ── Кроки консультації ── */
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .step{background:linear-gradient(180deg,#15151F,#101018);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;position:relative}
+  .step-n{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    color:#0A0A12;background:var(--gold);padding:6px 12px;border-radius:8px;margin-bottom:14px}
+  .step h3{font-size:17.5px;font-weight:800;line-height:1.4}
+  .step h3 span{color:#D3D4E4;font-weight:600}
+
+  /* ── Подарунок ── */
+  .gift{background:linear-gradient(120deg,rgba(37,244,238,.10),rgba(254,44,85,.10));border:1px solid var(--line);
+    border-radius:26px;padding:40px 30px;text-align:center;position:relative;overflow:hidden}
+  .gift .ic{font-size:56px;line-height:1;display:inline-block;transform-origin:center 80%;animation:giftWobble 1.3s ease-in-out infinite}
+  @keyframes giftWobble{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  .gift h2{margin:12px 0 8px;font-size:clamp(24px,4.6vw,36px)}
+  .gift p{color:#C7C8DD;font-size:17px;font-weight:600;max-width:560px;margin:0 auto}
+
+  /* ── Хто я ── */
+  .bio-grid{display:grid;grid-template-columns:1fr .82fr;gap:34px;align-items:center;margin-top:38px}
+  .bio-card{background:var(--card);color:var(--ink);border-radius:var(--radius);padding:30px 30px;box-shadow:0 30px 70px -30px rgba(0,0,0,.6)}
+  .bio-card p{font-size:17px;line-height:1.6;color:#2b2b40}
+  .bio-card p + p{margin-top:14px}
+  .bio-card b{color:var(--ink)}
+  .bio-photo{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:1/1;border:1px solid var(--line);
+    background:linear-gradient(160deg,#1a1a2b,#0e0e18);display:flex;align-items:center;justify-content:center}
+  .bio-photo .ph-svg{position:absolute;inset:0;width:100%;height:100%}
+  /* Фото коуча: показуємо голову+торс, шорти обрізаємо (zoom + позиція зверху) */
+  .bio-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transform:scale(1.26);transform-origin:50% 26%}
+  .bio-name{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:16px 18px;font-weight:800;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.75))}
+  .bio-name{font-size:20px}
+  .bio-role{display:inline-block;margin-top:9px;font-size:13.5px;font-weight:800;color:#fff;letter-spacing:.01em;
+    background:linear-gradient(90deg,rgba(37,244,238,.30),rgba(254,44,85,.30));border:1px solid rgba(255,255,255,.32);
+    padding:7px 13px;border-radius:99px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 6px 18px -8px rgba(0,0,0,.6)}
+  .br-m{display:none}
+
+  /* ── FAQ ── */
+  .faq{max-width:760px;margin:36px auto 0}
+  .qa{background:linear-gradient(180deg,#15151F,#101018);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+  .qa summary{list-style:none;cursor:pointer;padding:20px 22px;min-height:56px;font-weight:800;font-size:17px;display:flex;justify-content:space-between;gap:14px;align-items:center}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::after{content:"+";font-size:30px;font-weight:400;color:var(--cyan);transition:transform .2s;flex-shrink:0;width:36px;text-align:center}
+  .qa[open] summary::after{transform:rotate(45deg)}
+  .qa .a{padding:0 22px 20px;color:#CFCFDB;font-size:16.5px;line-height:1.6}
+
+  /* ── Фінал ── */
+  .final{text-align:center}
+  .final h2{margin-bottom:10px}
+
+  /* ── Липка кнопка ── */
+  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(10,10,18,0),rgba(10,10,18,.92) 34%);display:flex;justify-content:center;
+    transform:translateY(120%);transition:transform .3s ease;pointer-events:none}
+  .sticky.show{transform:none}
+  .sticky .cta{pointer-events:auto;width:100%;max-width:460px;box-shadow:0 12px 30px -8px rgba(254,44,85,.6)}
+
+  /* ── Футер ── */
+  .foot{padding:34px 0 130px;text-align:center;color:#9E9FB4;font-size:14px}
+  .foot a{color:#CFCFDB}
+
+  /* ── МОДАЛКА ВІДЕО-ВІДГУКУ ── */
+  .vmodal{position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;padding:16px;
+    background:rgba(6,6,12,.85);backdrop-filter:blur(6px)}
+  .vmodal.open{display:flex}
+  .vbox{position:relative;width:100%;max-width:400px}
+  .vbox video{width:100%;max-height:80vh;border-radius:18px;background:#000;display:block}
+  .vclose{position:absolute;top:-48px;right:0;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.14);color:#fff;font-size:19px;display:flex;align-items:center;justify-content:center}
+  .vclose:hover{background:rgba(255,255,255,.24)}
+
+  /* ── МОДАЛКА КВІЗА ── */
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;
+    background:rgba(6,6,12,.72);backdrop-filter:blur(6px)}
+  .modal.open{display:flex}
+  .modal-box{position:relative;width:100%;max-width:520px;height:min(92vh,760px);background:#fff;border-radius:22px;overflow:hidden;
+    box-shadow:0 40px 100px -30px rgba(0,0,0,.8)}
+  .modal-box iframe{width:100%;height:100%;border:0;display:block}
+  .modal-x{position:absolute;top:10px;right:10px;z-index:5;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(20,20,34,.10);color:#141422;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
+  .modal-x:hover{background:rgba(20,20,34,.18)}
+
+  /* ── Адаптив ── */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:26px}
+    .hero-media{width:100%;max-width:320px;justify-self:center;margin-top:6px}
+    .grid4{grid-template-columns:repeat(2,1fr)}
+    .bio-grid{grid-template-columns:1fr}
+    .bio-photo{width:100%;max-width:360px;justify-self:center;aspect-ratio:1/1}
   }
-
-  /* Тонка статична рамка на відгуках (краща «клікабельність») */
-  .vid::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:3;pointer-events:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
-
-  @media (prefers-reduced-motion:reduce){
-    .beam::after,.bonus-num,.bonus-ic,#startBtn,#submitBtn{animation:none}
+  @media (max-width:640px){
+    section{padding:44px 0}
+    .rev-grid{grid-template-columns:1fr;gap:14px}
+    .rev-card{aspect-ratio:1/.62}
+    .steps-grid{grid-template-columns:1fr}
+    .grid4{gap:14px}
+    .cta{width:100%;max-width:460px}
+    .cta-center{margin-top:26px}
+    /* Герой: заголовок → булети → чипи → КНОПКА видимі без прокрутки.
+       Порожній блок відео (заглушка) ховаємо, щоб не гнати крізь пусту рамку
+       і не відсувати кнопку вниз. Повернемо, коли заллємо ролик. */
+    .hero{padding-top:26px;padding-bottom:34px}
+    .hero h1{margin:12px 0 14px}
+    .hero-bul{margin:16px 0 18px;gap:10px}
+    .chips{margin:18px 0 22px}
+    .hero-media{display:none}
+    /* Бейдж коуча: на мобільному — у два рядки з написаним досвідом */
+    .br-d{display:none}
+    .br-m{display:inline;line-height:1.55}
+    .bio-role{border-radius:16px}
   }
-
-  /* ВІДГУКИ */
-  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:14px}
-  .vid{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:1/1.18;cursor:pointer;border:none;padding:0;text-align:left;background-size:cover;background-position:center;color:#fff}
-  .vid:nth-child(1){background:linear-gradient(180deg,#C6A2A2,#7E5F62)}
-  .vid:nth-child(2){background:linear-gradient(180deg,#A6B0C4,#5C6781)}
-  .vid:nth-child(3){background:linear-gradient(180deg,#AEC0A0,#5F7757)}
-  .vid video,.vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
-  .vid .veil{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.62))}
-  .vid .play{position:absolute;top:39%;left:50%;transform:translate(-50%,-50%);z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-  .vid .play svg{margin-left:2px}
-  .vid .cap{position:absolute;left:9px;right:9px;bottom:9px;z-index:2}
-  .vid .cap .stars{display:block;font-size:11px;letter-spacing:1px;line-height:1;margin-bottom:3px;color:#FFC53D}
-  .vid .cap b{display:block;font-size:13px;font-weight:800;line-height:1.2}
-  .vid .cap span{display:block;font-size:11.5px;font-weight:600;opacity:.95;line-height:1.25;margin-top:2px}
-
-  /* Агрегований рейтинг над відгуками */
-  .rating{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
-  .rating .rstars{color:#FFC53D;font-size:15px;letter-spacing:1.5px;line-height:1}
-  .rating .rtext{font-size:13px;font-weight:700;color:var(--gray)}
-  .rating .rtext b{color:var(--ink);font-weight:800}
-
-  /* КНОПКИ */
-  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--violet);color:#fff;border:none;border-radius:18px;font-size:19px;font-weight:800;padding:19px;cursor:pointer;box-shadow:0 12px 24px -8px rgba(124,92,252,.6);transition:transform .12s,background .2s;text-decoration:none}
-  .btn:hover{background:var(--violet-dark)}
-  .btn:active{transform:scale(.985)}
-
-  .foot{text-align:center;color:var(--gray);font-size:14px;margin-top:16px}
-  .foot b{color:var(--violet)}
-
-  /* ПИТАННЯ */
-  .q-title{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;line-height:1.22}
-  .q-hint{color:var(--gray);font-size:15px;margin-bottom:20px}
-  .options{display:flex;flex-direction:column;gap:11px}
-  .opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:17px 16px;font-size:16.5px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
-  .opt:hover{border-color:#C9BEFF;background:#FBFAFF}
-  .opt:active{transform:scale(.99)}
-  .opt.sel{border-color:var(--violet);background:var(--violet-soft)}
-  .opt .ic{font-size:22px;flex-shrink:0;width:26px;text-align:center}
-
-  /* ФОРМА */
-  .field{margin-bottom:14px}
-  .field label{display:block;font-size:14.5px;font-weight:700;margin-bottom:7px}
-  .field input[type=text],.field input[type=tel]{width:100%;border:2px solid var(--line);border-radius:14px;padding:16px;font-size:17px;font-family:inherit;color:var(--ink);transition:border-color .15s}
-  .field input:focus{outline:none;border-color:var(--violet)}
-  .field input.err{border-color:#E5484D}
-  .err-msg{color:#E5484D;font-size:13.5px;margin-top:6px;display:none}
-  .err-msg.on{display:block}
-
-  /* ТЕЛЕФОН: вибір країни + номер */
-  .phone-row{display:flex;gap:8px}
-  .dial{flex:0 0 118px;border:2px solid var(--line);border-radius:14px;padding:0 10px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="%236B7280" d="M0 0l6 8 6-8z"/></svg>');background-repeat:no-repeat;background-position:right 10px center}
-  .dial:focus{outline:none;border-color:var(--violet)}
-  .phone-row input{flex:1}
-
-  .agree{display:flex;align-items:flex-start;gap:10px;margin-top:6px;cursor:pointer;font-size:13.5px;color:var(--gray);line-height:1.4}
-  .agree input{width:20px;height:20px;flex-shrink:0;accent-color:var(--violet);margin-top:1px}
-  .agree a{color:var(--violet);text-decoration:underline}
-  .privacy{text-align:center;color:#9A9AAE;font-size:12.5px;margin-top:14px;line-height:1.4}
-  .form-note{text-align:center;color:#5a5a72;font-size:13.5px;font-weight:600;margin-top:13px;line-height:1.4}
-  .form-note b{color:var(--violet-dark);font-weight:800}
-
-  /* ПОДЯКА / TELEGRAM */
-  .center{text-align:center;padding:10px 4px}
-  .center .mark{width:78px;height:78px;border-radius:50%;background:var(--violet-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:38px}
-  .center h2{font-size:26px;font-weight:800;margin-bottom:12px;line-height:1.2}
-  .center p{color:var(--gray);font-size:16.5px;margin-bottom:8px}
-
-  /* ЦИТАТА-МЕТЧ: показує релевантний відгук залежно від відповіді на Q2 */
-  .match-quote{display:none;background:var(--violet-soft);color:var(--ink);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;line-height:1.35;margin-bottom:18px;text-align:center}
-
-  /* МОДАЛКА */
-  .modal{position:fixed;inset:0;background:rgba(10,8,24,.92);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
-  .modal.on{display:flex}
-  .modal video{max-width:100%;max-height:84dvh;border-radius:18px;background:#000}
-  .modal .x{position:absolute;top:18px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.16);border:none;color:#fff;font-size:24px;cursor:pointer}
-
-  @media(max-width:380px){
-    h1{font-size:26px}
-    .card{padding:28px 18px 22px}
-    .vid .cap b{font-size:12px}
-    .vid .cap span{font-size:10.5px}
-  }
-
-  /* Низькі екрани (старі/невеликі телефони) — щоб усе влізло без скролу */
-  @media(max-height:679px){
-    body{padding:10px}
-    .card{padding:18px 16px}
-    .grip{margin:0 auto 12px}
-    h1.intro-h1{font-size:21px;margin-bottom:6px}
-    .intro-sub{font-size:13px;margin-bottom:8px}
-    .bullets{gap:5px;margin-bottom:8px}
-    .bullets li{font-size:14px}
-    .divider{margin:2px 0 7px;font-size:11px}
-    .rating{margin-bottom:8px}
-    .rating .rstars{font-size:13px}
-    .rating .rtext{font-size:12px}
-    .vid .cap .stars{font-size:10px;margin-bottom:2px}
-    .vid{aspect-ratio:1/1.05}
-    .videos{margin-bottom:10px}
-    .vid .cap b{font-size:12px}
-    .vid .cap span{font-size:10.5px}
-    .bonus{padding:10px 12px;margin-bottom:10px}
-    .bonus-ic{font-size:26px}
-    .bonus-tx{font-size:13px}
-    .btn{padding:15px;font-size:17px}
-    #startBtn{margin-bottom:10px}
-    .foot{margin-top:9px;font-size:13px}
-    /* форма теж компактніше */
-    .q-title{font-size:21px}
-    .q-hint{margin-bottom:12px}
-    .field{margin-bottom:9px}
-    .field input[type=text],.field input[type=tel],.dial{padding-top:12px;padding-bottom:12px}
-    /* на малому екрані картка-відгук компактніша, щоб форма влізла без скролу */
-    .card .review-card{padding:9px 12px;margin-bottom:13px}
-    .card .review-card img{width:50px;height:50px}
-    .card .review-metric{font-size:14px}
-  }
-
-  /* МОБІЛЬНИЙ: квіз на ВЕСЬ екран телефону (під діагональ), без сірої рамки */
-  @media (max-width:560px){
-    body{padding:0;align-items:stretch;background:#fff;min-height:100dvh;min-height:var(--app-h,100dvh)}
-    .card{
-      max-width:none;min-height:100vh;min-height:100dvh;min-height:var(--app-h,100dvh);border-radius:0;box-shadow:none;
-      display:flex;flex-direction:column;
-      padding:calc(env(safe-area-inset-top) + 16px) 22px calc(env(safe-area-inset-bottom) + 16px);
-    }
-    .grip{display:none}
-    /* активний крок займає весь вільний простір і центрується по вертикалі (компактний блок) */
-    .screen.active{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;overflow-y:auto}
-  }
-
-  /* Звичайні/високі телефони: контент трохи більший, але компактний — щоб усе інтро
-     влазило БЕЗ скролу (враховано підзаголовок + рейтинг). */
-  @media (max-width:560px) and (min-height:680px){
-    h1.intro-h1{font-size:27px;line-height:1.15;margin-bottom:9px}
-    .intro-sub{font-size:14.5px;margin-bottom:11px}
-    .bullets{gap:7px;max-width:360px;margin-bottom:9px}
-    .bullets li{font-size:16px;padding-left:30px}
-    .bullets li::before{font-size:16px}
-    .divider{font-size:11px;letter-spacing:.04em;margin:4px 0 9px}
-    .rating{margin-bottom:9px}
-    .rating .rstars{font-size:14px}
-    .rating .rtext{font-size:12.5px}
-    .vid{aspect-ratio:1/1.22}
-    .vid .cap b{font-size:13.5px}
-    .vid .cap span{font-size:11.5px}
-    .videos{gap:10px;margin-bottom:11px}
-    .bonus{padding:11px 14px;margin-bottom:11px}
-    .bonus-tx{font-size:14px}
-    .bonus-ic{font-size:29px}
-    .btn{font-size:19px;padding:17px}
-    .foot{font-size:13.5px;margin-top:11px}
-  }
-
-  /* Дуже високі телефони (Pro Max тощо) — трохи повітря, місця вистачає */
-  @media (max-width:560px) and (min-height:850px){
-    h1.intro-h1{font-size:29px;margin-bottom:12px}
-    .bullets{gap:9px;margin-bottom:12px}
-    .bullets li{font-size:17px}
-    .videos{margin-bottom:14px}
-    .bonus{margin-bottom:14px}
-    .btn{padding:19px}
-  }
-  /* Компактна картка-відгук на формі — зчитується за секунду: фото + зірки + ім'я + цифра */
-  .review-card{display:flex;align-items:center;gap:13px;background:var(--violet-soft);border-radius:16px;padding:12px 14px;margin-bottom:18px}
-  .review-card img{width:56px;height:56px;border-radius:14px;object-fit:cover;flex-shrink:0}
-  .review-txt{min-width:0}
-  .review-stars{color:#FFB400;font-size:13px;letter-spacing:2px;line-height:1;margin-bottom:5px}
-  .review-name{font-size:13px;font-weight:600;color:#5a5a72;line-height:1.3}
-  .review-name b{color:var(--ink);font-weight:800}
-  .review-metric{font-size:14.5px;font-weight:800;color:var(--violet-dark);line-height:1.25;margin-top:3px}
 </style>
 </head>
 <body>
 
-<main class="card">
-
-  <div class="progress" id="progress">
-    <div class="progress-top">
-      <button class="back" id="backBtn" type="button">← Назад</button>
-      <span class="progress-label" id="progLabel">Питання 1 з 3</span>
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="glow cyan" style="width:420px;height:420px;top:-120px;left:-140px"></div>
+  <div class="glow red" style="width:380px;height:380px;top:40px;right:-160px"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">🌍 TikTok для українців за кордоном</span>
+        <h1>Як за <span class="grad-text">30 днів</span> отримати перших клієнтів з <span class="grad-text">TikTok у Європі</span> 🔥</h1>
+        <ul class="hero-bul">
+          <li>Навіть якщо боїшся камери</li>
+          <li>Без блогу і без підписників</li>
+          <li>Навіть якщо починаєш з нуля</li>
+        </ul>
+        <div class="chips">
+          <span class="chip">👥 130+ учнів</span>
+          <span class="chip"><span class="st">★</span> 4.9 за відгуками</span>
+          <span class="chip">🎯 консультація безкоштовна</span>
+        </div>
+        <div class="hero-cta-row">
+          <button class="cta big" data-quiz>Записатися</button>
+          <p class="cta-note">Беру лише <b>5 людей на тиждень</b> · консультація безкоштовна</p>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="media-frame" data-quiz role="button" aria-label="Записатися">
+          <svg class="ph-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#25F4EE" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#FE2C55" stop-opacity=".22"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#g1)"/>
+            <g opacity=".9">
+              <rect x="150" y="120" width="100" height="200" rx="18" fill="#0d0d18" stroke="#2a2a3e"/>
+              <rect x="160" y="150" width="80" height="120" rx="8" fill="#171728"/>
+              <polyline points="168,250 190,220 210,235 232,190" fill="none" stroke="#25F4EE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="232" cy="190" r="5" fill="#FE2C55"/>
+            </g>
+          </svg>
+          <div class="media-tag">Відео коуча</div>
+          <div class="play-badge"></div>
+          <div class="media-cap">▶ Тут буде відео Віталія · 30–60 сек</div>
+        </div>
+      </div>
     </div>
-    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
   </div>
+</section>
 
-  <!-- ========== ЕКРАН 0: ІНТРО ========== -->
-  <section class="screen active" data-screen="intro">
-    <div class="grip"></div>
-    <div class="eyebrow">Живеш за кордоном?</div>
-    <h1 class="intro-h1">Як за&nbsp;30&nbsp;днів отримати <span class="hl">перших клієнтів з&nbsp;TikTok</span> в&nbsp;Європі 🔥</h1>
-    <p class="intro-sub">Покроковий план під тебе — навіть з&nbsp;телефона, по 20&nbsp;хвилин на&nbsp;день</p>
-    <ul class="bullets">
-      <li>Навіть якщо боїшся камери</li>
-      <li>Навіть без блогу і підписників</li>
-      <li>Навіть якщо починаєш з нуля</li>
-    </ul>
-
-    <div class="divider">✦ 130+ українців вже знаходять клієнтів через TikTok ✦</div>
-
-    <div class="rating">
-      <span class="rstars">★★★★★</span>
-      <span class="rtext"><b>4.9 з 5</b> · за відгуками учнів</span>
+<!-- ══════════════ ДЛЯ ТЕБЕ, ЯКЩО ТИ ══════════════ -->
+<section class="sec-tight">
+  <div class="wrap">
+    <h2>Персональний розбір <span class="grad-text">для тебе</span>, якщо ти</h2>
+    <div class="grid4">
+      <div class="fit-card"><div class="fit-ic">🚀</div><p>Починаєш з нуля і не розумієш, як перетворити TikTok у джерело клієнтів</p></div>
+      <div class="fit-card"><div class="fit-ic">🎬</div><p>Втомився знімати відео без результату і хочеш чітку стратегію, що реально продає</p></div>
+      <div class="fit-card"><div class="fit-ic">💡</div><p>Маєш знання або продукт, але не знаєш, як правильно продати це в інтернеті</p></div>
+      <div class="fit-card"><div class="fit-ic">📈</div><p>Хочеш побудувати стабільний потік клієнтів у своїй ніші — без платної реклами</p></div>
     </div>
+    <div class="cta-center"><button class="cta" data-quiz>Це про мене — записатися</button></div>
+  </div>
+</section>
 
-    <!-- ВІДГУКИ: відео клади в /videos як video1.mp4, video2.mp4, video3.mp4 -->
-    <div class="videos">
-      <button class="vid" type="button" data-src="videos/video1.mp4">
-        <picture>
-          <source srcset="videos/poster1.webp" type="image/webp">
-          <img src="videos/poster1.jpg" alt="Відгук: Альона, 45, Кулінарія" fetchpriority="high" decoding="async" width="200" height="260">
-        </picture>
-        <div class="veil"></div>
-        <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
-        <div class="cap"><span class="stars">★★★★★</span><b>Альона, 45</b><span>Кулінарія</span></div>
+<!-- ══════════════ ВІДГУКИ ══════════════ -->
+<section>
+  <div class="glow cyan" style="width:340px;height:340px;top:20px;left:-160px;opacity:.35"></div>
+  <div class="wrap">
+    <h2>Учні вже <span class="grad-text">отримують клієнтів</span></h2>
+    <p class="sec-sub">Реальні люди у різних нішах, які починали з нуля — так само, як ти зараз.</p>
+    <div class="rev-grid">
+      <button class="rev-card" type="button" data-video="videos/video1.mp4" data-poster="videos/poster1.webp">
+        <img src="videos/poster1.webp" alt="Альона, 45" loading="lazy" decoding="async">
+        <div class="veil"></div><div class="rev-play"></div>
+        <div class="rev-meta"><span class="st">★★★★★</span><b>Альона, 45</b><span>Кулінарія · продає через TikTok</span></div>
       </button>
-
-      <button class="vid" type="button" data-src="videos/video2.mp4">
-        <picture>
-          <source srcset="videos/poster2.webp" type="image/webp">
-          <img src="videos/poster2.jpg" alt="Відгук: Тетяна, 54, Лайф-коуч" fetchpriority="high" decoding="async" width="200" height="260">
-        </picture>
-        <div class="veil"></div>
-        <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
-        <div class="cap"><span class="stars">★★★★★</span><b>Тетяна, 54</b><span>Лайф-коуч</span></div>
+      <button class="rev-card" type="button" data-video="videos/video2.mp4" data-poster="videos/poster2.webp">
+        <img src="videos/poster2.webp" alt="Тетяна, 54" loading="lazy" decoding="async">
+        <div class="veil"></div><div class="rev-play"></div>
+        <div class="rev-meta"><span class="st">★★★★★</span><b>Тетяна, 54</b><span>Лайф-коуч · перші клієнти з TikTok</span></div>
       </button>
-
-      <button class="vid" type="button" data-src="videos/video3.mp4">
-        <picture>
-          <source srcset="videos/poster3.webp" type="image/webp">
-          <img src="videos/poster3.jpg" alt="Відгук: Оксана, 50, Вчитель мови" fetchpriority="high" decoding="async" width="200" height="260">
-        </picture>
-        <div class="veil"></div>
-        <div class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path fill="#1C1C2E" d="M0 0l14 8-14 8z"/></svg></div>
-        <div class="cap"><span class="stars">★★★★★</span><b>Оксана, 50</b><span>Вчитель мови</span></div>
+      <button class="rev-card" type="button" data-video="videos/video3.mp4" data-poster="videos/poster3.webp">
+        <img src="videos/poster3.webp" alt="Оксана, 50" loading="lazy" decoding="async">
+        <div class="veil"></div><div class="rev-play"></div>
+        <div class="rev-meta"><span class="st">★★★★★</span><b>Оксана, 50</b><span>Вчитель мови · заявка на 9-й день</span></div>
       </button>
     </div>
-
-    <button class="btn beam" id="startBtn" type="button">Отримати свій план →</button>
-
-    <div class="bonus">
-      <div class="bonus-ic">🎁</div>
-      <div class="bonus-tx"><b>Відеоурок у&nbsp;подарунок:</b> як упакувати профіль, щоб він приводив заявки</div>
+    <div class="rev-btn-row">
+      <a class="btn-ghost" href="https://vidguki.vercel.app/" target="_blank" rel="noopener">▶ Дивитись усі відгуки учнів →</a>
     </div>
-    <p class="foot">⏱ <b>3 питання</b> · займе 30 секунд</p>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== ПИТАННЯ 1 ========== -->
-  <section class="screen" data-screen="q1">
-    <div class="q-title">На якому етапі ти зараз в TikTok?</div>
-    <div class="q-hint">Обери, що найближче — від цього залежить твій план</div>
-    <div class="options" data-q="q1">
-      <button class="opt" data-val="Не розумію, з чого почати"><span class="ic">🤔</span> Не розумію, з чого почати і як залучати клієнтів</button>
-      <button class="opt" data-val="Є профіль, але нема заявок"><span class="ic">📄</span> Є профіль, але нема заявок</button>
-      <button class="opt" data-val="Є перегляди, але клієнтів 0"><span class="ic">👀</span> Є перегляди, але клієнтів 0</button>
+<!-- ══════════════ ЯК ПРОХОДИТЬ КОНСУЛЬТАЦІЯ ══════════════ -->
+<section class="sec-tight">
+  <div class="wrap">
+    <h2>Як проходить <span class="grad-text">консультація</span></h2>
+    <p class="sec-sub">Це живий розбір саме твоєї ситуації, без тиску. А в кінці, якщо підійде — розкажу про свою програму навчання. Усе онлайн — з дому.</p>
+    <div class="steps-grid">
+      <div class="step"><div class="step-n">⏰ Крок 1</div><h3>Оберемо зручний час <span>— усе проходить онлайн у Google Meet</span></h3></div>
+      <div class="step"><div class="step-n">🔍 Крок 2</div><h3>Розберемо твою ідею або продукт <span>і визначимо, як це продати через TikTok</span></h3></div>
+      <div class="step"><div class="step-n">📌 Крок 3</div><h3>Знайдемо реальні точки росту <span>і приберемо все, що не працює</span></h3></div>
+      <div class="step"><div class="step-n">🧮 Крок 4</div><h3>Прорахуємо потенційний прибуток <span>— побачиш, скільки можна заробити</span></h3></div>
+      <div class="step"><div class="step-n">🗺️ Крок 5</div><h3>Складемо покроковий план <span>з термінами під твій бажаний дохід</span></h3></div>
+      <div class="step"><div class="step-n">🎁 Крок 6</div><h3>Якщо співпадемо по цінностях <span>— запропоную свою програму навчання</span></h3></div>
     </div>
-  </section>
+    <div class="cta-center"><button class="cta" data-quiz>Мені підходить — записатися</button></div>
+    <p class="cta-note">Беру лише <b>5 людей на тиждень</b> · консультація безкоштовна</p>
+  </div>
+</section>
 
-  <!-- ========== ПИТАННЯ 2 ========== -->
-  <section class="screen" data-screen="q2">
-    <div class="q-title">Що ти хочеш отримувати з TikTok?</div>
-    <div class="q-hint">Уяви, що це вже працює — що для тебе найважливіше?</div>
-    <div class="options" data-q="q2">
-      <button class="opt" data-val="Клієнтів на послуги"><span class="ic">💼</span> Клієнтів на послуги</button>
-      <button class="opt" data-val="Продажі товарів"><span class="ic">🛍️</span> Продажі товарів</button>
-      <button class="opt" data-val="Мережевий бізнес / Бади"><span class="ic">🤝</span> Мережевий бізнес / Бади</button>
-      <button class="opt" data-val="Просування особистого бренду"><span class="ic">🌟</span> Просування особистого бренду</button>
-      <button class="opt" data-val="Інше"><span class="ic">❓</span> Інше</button>
+<!-- ══════════════ ПОДАРУНОК ══════════════ -->
+<section class="sec-tight">
+  <div class="wrap">
+    <div class="gift">
+      <div class="glow red" style="width:260px;height:260px;top:-80px;right:-60px;opacity:.3"></div>
+      <div class="ic">🎁</div>
+      <h2>В подарунок <span class="grad-text">після розбору</span></h2>
+      <p>«30 гачків для відео», які збирають перегляди і продають — забираєш одразу після консультації.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== ПИТАННЯ 3 (з розгалуженням) ========== -->
-  <section class="screen" data-screen="q3">
-    <div class="q-title">За нашим досвідом, результат потребує вкладень.<br>Готова/ий інвестувати час і гроші у свій TikTok?</div>
-    <div class="q-hint">Перший крок — безкоштовна консультація. Далі, за бажанням, платне навчання під твій бюджет 🙌</div>
-    <div class="options" data-q="q3">
-      <button class="opt" data-route="form" data-track="paid_1" data-val="Готова діяти заради результату"><span class="ic">🚀</span> Так, я готова/ий діяти заради результату</button>
-      <button class="opt" data-route="form" data-track="paid_2" data-val="Готова, якщо є розстрочка"><span class="ic">💳</span> Так, якщо буде зручна розстрочка</button>
-      <button class="opt" data-route="tg" data-track="free" data-val="Цікавить лише безкоштовне"><span class="ic">🌱</span> Ні, поки цікавить лише безкоштовне</button>
-    </div>
-  </section>
-
-  <!-- ========== ФОРМА КОНТАКТУ (гілка «готовий інвестувати») ========== -->
-  <section class="screen" data-screen="form">
-    <div class="q-title">Покроковий план, як отримати перших клієнтів з&nbsp;TikTok за 30 днів 🔥</div>
-    <div class="review-card">
-      <picture>
-        <source srcset="videos/poster3.webp" type="image/webp">
-        <img src="videos/poster3.jpg" alt="Оксана, 50" width="56" height="56" loading="lazy" decoding="async">
-      </picture>
-      <div class="review-txt">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-name"><b>Оксана, 50</b> · вчитель мови та літератури</div>
-        <div class="review-metric">Перша заявка на 9-й день</div>
+<!-- ══════════════ ХТО Я ══════════════ -->
+<section>
+  <div class="glow cyan" style="width:340px;height:340px;bottom:-80px;right:-160px;opacity:.32"></div>
+  <div class="wrap">
+    <h2>Хто я <span class="grad-text">і як працює</span> моя система</h2>
+    <div class="bio-grid">
+      <div class="bio-card">
+        <p>Привіт! Я <b>Віталій Мендалюк</b>. Понад <b>4 роки</b> працюю в маркетингу й за цей час пройшов <b>десятки ніш, продуктів і стратегій</b>, щоб зрозуміти головне: бізнес росте тоді, коли система працює на тебе, а не ти на систему. У моєму портфоліо багато кейсів, де люди <b>стартували з нуля</b> й виходили на стабільний дохід, масштабували проєкти та збільшували оборот. Саме цей досвід я тепер вкладаю у свою <b>систему роботи з TikTok</b>.</p>
+        <p>Тепер я хочу допомогти тобі зробити те саме — швидше і без помилок, які колись робив я сам. Покажу, як упакувати себе так, щоб викликати довіру, і як створювати контент, що <b>не просто набирає перегляди, а приводить реальних клієнтів</b>. Моя задача — не навчити тебе «знімати відео», а дати механіку, яка перетворює TikTok на робочий бізнес-інструмент.</p>
+      </div>
+      <div class="bio-photo">
+        <picture>
+          <source srcset="videos/111.webp" type="image/webp">
+          <img class="bio-img" src="videos/111.jpg" alt="Віталій Мендалюк" loading="lazy" decoding="async">
+        </picture>
+        <div class="bio-name">Віталій Мендалюк<span class="bio-role"><span class="br-d">🎯 наставник з&nbsp;TikTok · маркетолог 4+&nbsp;роки</span><span class="br-m">🎯 наставник з&nbsp;TikTok<br>✨ 4+&nbsp;роки досвіду</span></span></div>
       </div>
     </div>
+    <div class="cta-center"><button class="cta" data-quiz>Хочу клієнтів</button></div>
+  </div>
+</section>
 
-    <form id="leadForm" novalidate>
-      <div class="field">
-        <label for="name">Ваше імʼя</label>
-        <input id="name" name="name" type="text" autocomplete="given-name" placeholder="Імʼя" />
-      </div>
-      <div class="field">
-        <label for="phone">Ваш номер телефону</label>
-        <div class="phone-row">
-          <select id="dial" class="dial" aria-label="Код країни"></select>
-          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="xx xxx xxxx" />
-        </div>
-        <div class="err-msg" id="phoneErr">Вкажіть телефон або @нік у Telegram — досить одного</div>
-      </div>
-      <div class="field">
-        <label for="tguser">або @нік у Telegram</label>
-        <input id="tguser" name="tguser" type="text" autocomplete="username" placeholder="@нік" />
-      </div>
-
-      <label class="agree">
-        <input type="checkbox" id="agree" checked />
-        <span>Я погоджуюсь з <a href="privacy.html" target="_blank">політикою конфіденційності</a> та правилами використання</span>
-      </label>
-      <div class="err-msg" id="agreeErr" style="margin-top:2px">Потрібна згода, щоб надіслати заявку</div>
-
-      <button class="btn" type="submit" id="submitBtn" style="margin-top:18px">Отримати свій план →</button>
-      <p class="form-note">Беру <b>5 людей на тиждень</b> · перша консультація <b>безкоштовна</b></p>
-    </form>
-  </section>
-
-  <!-- ========== БЕЗКОШТОВНА ГІЛКА: захоплення ніку ========== -->
-  <section class="screen" data-screen="tg">
-    <div class="center">
-      <div class="mark">🎁</div>
-      <h2>Куди надіслати твій подарунок?</h2>
-      <p>Відеоурок скину прямо в Telegram</p>
-      <form id="freeForm" novalidate style="text-align:left;margin-top:16px">
-        <div class="field">
-          <input id="freeTg" name="freeTg" type="text" autocomplete="username" placeholder="@твій нік у Telegram" />
-          <div class="err-msg" id="freeErr">Вкажи свій нік у Telegram</div>
-        </div>
-        <button class="btn" type="submit">Забрати відеоурок →</button>
-      </form>
-      <p class="privacy" style="margin-top:14px">Безкоштовно · без спаму</p>
+<!-- ══════════════ FAQ ══════════════ -->
+<section class="sec-tight">
+  <div class="wrap">
+    <h2>Часті <span class="grad-text">запитання</span></h2>
+    <div class="faq">
+      <details class="qa"><summary>Мені 45–60+. У такому віці це спрацює?</summary><div class="a">Так. Більшість учнів — це дорослі люди, які починали без досвіду у зйомці. У TikTok саме зрілість і життєвий досвід викликають довіру. Ми підбираємо формат, у якому тобі комфортно.</div></details>
+      <details class="qa"><summary>Треба знати англійську?</summary><div class="a">Ні. Ти працюєш українською або російською на свою аудиторію за кордоном. Мова контенту — твоя рідна.</div></details>
+      <details class="qa"><summary>Боюся камери і не хочу показувати обличчя</summary><div class="a">Це нормально — з цього починають майже всі. Є формати, де обличчя не обов'язкове, а страх камери минає вже після перших відео за нашою механікою.</div></details>
+      <details class="qa"><summary>Консультація справді безкоштовна?</summary><div class="a">Так. Персональний розбір безкоштовний. Навчання — окремо і лише за твоїм бажанням, якщо ми співпадемо по цінностях.</div></details>
+      <details class="qa"><summary>Треба вже мати блог чи підписників?</summary><div class="a">Ні. Можна починати з нуля — без блогу, без підписників і без бюджету на рекламу.</div></details>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== ПІДТВЕРДЖЕННЯ БЕЗКОШТОВНОЇ ГІЛКИ ========== -->
-  <section class="screen" data-screen="freedone">
-    <div class="center">
-      <div class="mark">✅</div>
-      <h2>Готово!</h2>
-      <p>Відеоурок надішлю тобі в Telegram найближчим часом 🎁</p>
-      <a class="btn" id="freeTgBtn" href="#" target="_blank" rel="noopener" style="margin-top:18px">✈️ Відкрити Telegram</a>
-      <p class="privacy" style="margin-top:14px">Можеш закривати сторінку</p>
-    </div>
-  </section>
+<!-- ══════════════ ФІНАЛЬНИЙ CTA ══════════════ -->
+<section class="final">
+  <div class="glow red" style="width:360px;height:360px;top:-40px;left:50%;transform:translateX(-50%);opacity:.28"></div>
+  <div class="wrap">
+    <h2>Зроби перший крок <span class="grad-text">до клієнтів з TikTok</span></h2>
+    <p class="sec-sub">Залиш заявку за 30 секунд — і обери зручний час для персонального розбору. Це ні до чого тебе не зобов'язує.</p>
+    <div class="cta-center"><button class="cta big" data-quiz>Записатися на розбір</button></div>
+    <p class="cta-note">👥 <b>130+ учнів</b> · <span style="color:#E8C066">★</span> <b>4.9</b> · беру лише <b>5 на тиждень</b></p>
+  </div>
+</section>
 
-  <!-- ========== ПОДЯКА ========== -->
-  <section class="screen" data-screen="thankyou">
-    <div class="center">
-      <div class="mark"><svg width="36" height="36" viewBox="0 0 24 24"><path fill="none" stroke="#7C5CFC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-      <h2>Готово! Заявку прийнято ✨</h2>
-      <p>Дякую, <b id="tyName">друже</b>! Я звʼяжуся з вами найближчим часом, щоб домовитись про зручний час безкоштовної консультації.</p>
-      <p style="margin-top:12px">🎁 А ще надішлю вам у подарунок <b>відеоурок</b> — як упакувати профіль, щоб він приводив заявки.</p>
-      <a class="btn" id="tyTgBtn" href="#" target="_blank" rel="noopener" style="margin-top:18px">✈️ Написати мені в Telegram</a>
-      <p style="margin-top:12px;font-size:14.5px;color:#9A9AAE">Хочеш домовитись швидше? Напиши особисто 👆</p>
-    </div>
-  </section>
+<div class="foot">
+  <div class="wrap">© Віталій Мендалюк · TikTok-наставництво · <a href="privacy.html">Політика конфіденційності</a></div>
+</div>
 
-</main>
+<!-- ── Липка кнопка ── -->
+<div class="sticky" id="sticky">
+  <button class="cta" data-quiz>Записатися</button>
+</div>
 
-<div class="modal" id="modal">
-  <button class="x" id="modalX" type="button">✕</button>
-  <video id="modalVideo" controls playsinline></video>
+<!-- ── Модалка відео-відгуку ── -->
+<div class="vmodal" id="videoModal" aria-hidden="true">
+  <div class="vbox">
+    <button class="vclose" id="videoClose" aria-label="Закрити">✕</button>
+    <video id="revVideo" controls playsinline preload="none"></video>
+  </div>
+</div>
+
+<!-- ── Модалка з квізом ── -->
+<div class="modal" id="quizModal" aria-hidden="true">
+  <div class="modal-box">
+    <button class="modal-x" id="quizClose" aria-label="Закрити">✕</button>
+    <iframe id="quizFrame" title="Квіз" loading="lazy"></iframe>
+  </div>
 </div>
 
 <script>
-/* =========================================================
-   ⚙️ НАЛАШТУВАННЯ — заміни посилання на свій Telegram-канал
-   ========================================================= */
-const TG_PERSONAL = 'https://t.me/vmendaliuk';   // твій особистий акаунт (кнопки подяки і бонусу)
+  const modal   = document.getElementById('quizModal');
+  const frame   = document.getElementById('quizFrame');
+  const closeBt = document.getElementById('quizClose');
+  let frameLoaded = false;
 
-const TG_TEXT_BONUS = 'Привіт! Хочу забрати відеоурок про упаковку профілю 🎁';
-const TG_TEXT_PERSONAL = 'Привіт! Щойно пройшла(ов) квіз на сайті, хочу домовитись про консультацію 🚀';
-document.getElementById('tyTgBtn').href = TG_PERSONAL + '?text=' + encodeURIComponent(TG_TEXT_PERSONAL);
-const _freeTgBtn = document.getElementById('freeTgBtn');
-if(_freeTgBtn) _freeTgBtn.href = TG_PERSONAL + '?text=' + encodeURIComponent(TG_TEXT_BONUS);
-
-/* Точна висота видимого екрана для ВСІХ браузерів (Chrome mobile, Instagram/Facebook in-app тощо),
-   бо dvh/vh у вбудованих браузерах рахуються неправильно і дають великі прольоти */
-function setAppHeight(){ document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px'); }
-setAppHeight();
-window.addEventListener('resize', setAppHeight);
-window.addEventListener('orientationchange', ()=> setTimeout(setAppHeight, 250));
-
-/* =========================================================
-   НАВІГАЦІЯ КВІЗА (з історією для кнопки «Назад»)
-   ========================================================= */
-const screens = [...document.querySelectorAll('.screen')];
-const validNames = screens.map(s => s.dataset.screen);   // intro, q1, q2, q3, form, tg, thankyou
-const answers = {};
-let current = 'intro';
-
-const progress = document.getElementById('progress');
-const progFill = document.getElementById('progFill');
-const progLabel = document.getElementById('progLabel');
-
-function render(name){
-  if(!validNames.includes(name)) name = 'intro';
-  screens.forEach(s => s.classList.toggle('active', s.dataset.screen === name));
-  current = name;
-  window.scrollTo({top:0,behavior:'smooth'});
-  const qIndex = ['q1','q2','q3'].indexOf(name);
-  if(qIndex > -1){
-    progress.classList.add('on');
-    progFill.style.width = ((qIndex+1)/3*100) + '%';
-    progLabel.textContent = `Питання ${qIndex+1} з 3`;
-  } else {
-    progress.classList.remove('on');
+  function openQuiz(){
+    if(!frameLoaded){ frame.src = 'quiz.html'; frameLoaded = true; } // ліниве завантаження → QuizStart саме при відкритті
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
   }
-}
-
-// Кожен крок = окрема «підсторінка» зі своїм URL (#q1, #q2 …).
-// Завдяки цьому працює системна кнопка «Назад» на телефоні.
-function go(name){
-  if((location.hash || '#intro').slice(1) === name) render(name);
-  else location.hash = name;
-}
-window.addEventListener('hashchange', ()=> render((location.hash || '#intro').slice(1)));
-
-let quizStarted = false;
-function startQuiz(){
-  if(!quizStarted){ quizStarted = true; if(typeof fbq === 'function') fbq('trackCustom', 'QuizStart'); }
-  go('q1');
-}
-document.getElementById('startBtn').addEventListener('click', startQuiz);
-document.getElementById('backBtn').addEventListener('click', ()=> history.back());
-
-// Стартовий екран за поточним hash (або інтро)
-render((location.hash || '#intro').slice(1));
-
-/* Вибір відповіді */
-document.querySelectorAll('.options').forEach(group=>{
-  group.querySelectorAll('.opt').forEach(opt=>{
-    opt.addEventListener('click', ()=>{
-      group.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
-      opt.classList.add('sel');
-      answers[group.dataset.q] = opt.dataset.val;
-
-      // Подія пікселя на кожне питання (з параметром обраного варіанту).
-      // Для Q3 параметр — paid_1 / paid_2 / free (data-track), щоб рахувати ціну фільтра.
-      const qEvent = { q1:'Question_1', q2:'Question_2', q3:'Question_3' }[group.dataset.q];
-      if(qEvent && typeof fbq === 'function'){
-        const answerParam = group.dataset.q === 'q3' ? (opt.dataset.track || '') : opt.dataset.val;
-        fbq('trackCustom', qEvent, { answer: answerParam });
-      }
-
-      if(group.dataset.q === 'q3'){
-        const route = opt.dataset.route; // 'form' | 'tg'
-        setTimeout(()=> go(route === 'tg' ? 'tg' : 'form'), 260);
-      } else {
-        const nextScreen = group.dataset.q === 'q1' ? 'q2' : 'q3';
-        setTimeout(()=> go(nextScreen), 260);
-      }
-    });
-  });
-});
-
-/* =========================================================
-   ВИБІР КРАЇНИ + АВТО-ВИЗНАЧЕННЯ ПО ГЕОЛОКАЦІЇ
-   (підтягує код країни, з якої людина бачила рекламу)
-   ========================================================= */
-// [iso2, прапор, код, назва]
-const COUNTRIES = [
-  ['ua','🇺🇦','+380','Україна'], ['pl','🇵🇱','+48','Польща'], ['de','🇩🇪','+49','Німеччина'],
-  ['cz','🇨🇿','+420','Чехія'], ['it','🇮🇹','+39','Італія'], ['es','🇪🇸','+34','Іспанія'],
-  ['pt','🇵🇹','+351','Португалія'], ['fr','🇫🇷','+33','Франція'], ['gb','🇬🇧','+44','Велика Британія'],
-  ['ie','🇮🇪','+353','Ірландія'], ['nl','🇳🇱','+31','Нідерланди'], ['be','🇧🇪','+32','Бельгія'],
-  ['at','🇦🇹','+43','Австрія'], ['ch','🇨🇭','+41','Швейцарія'], ['se','🇸🇪','+46','Швеція'],
-  ['no','🇳🇴','+47','Норвегія'], ['dk','🇩🇰','+45','Данія'], ['fi','🇫🇮','+358','Фінляндія'],
-  ['sk','🇸🇰','+421','Словаччина'], ['hu','🇭🇺','+36','Угорщина'], ['ro','🇷🇴','+40','Румунія'],
-  ['bg','🇧🇬','+359','Болгарія'], ['gr','🇬🇷','+30','Греція'], ['hr','🇭🇷','+385','Хорватія'],
-  ['si','🇸🇮','+386','Словенія'], ['lt','🇱🇹','+370','Литва'], ['lv','🇱🇻','+371','Латвія'],
-  ['ee','🇪🇪','+372','Естонія'], ['cy','🇨🇾','+357','Кіпр'], ['tr','🇹🇷','+90','Туреччина'],
-  ['il','🇮🇱','+972','Ізраїль'], ['us','🇺🇸','+1','США'], ['ca','🇨🇦','+1','Канада']
-];
-const dial = document.getElementById('dial');
-COUNTRIES.forEach(([iso,flag,code,name])=>{
-  const o = document.createElement('option');
-  o.value = iso; o.dataset.dial = code; o.textContent = `${flag} ${code}`;
-  o.title = name; dial.appendChild(o);
-});
-dial.value = 'pl'; // запасний варіант до визначення геолокації
-
-function flagEmoji(cc){ return cc.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt())); }
-
-// Авто-визначення країни по IP
-fetch('https://ipapi.co/json/')
-  .then(r => r.json())
-  .then(d => {
-    const iso = (d.country_code || '').toLowerCase();
-    if(!iso) return;
-    let opt = [...dial.options].find(o => o.value === iso);
-    if(!opt && d.country_calling_code){
-      opt = document.createElement('option');
-      opt.value = iso; opt.dataset.dial = d.country_calling_code;
-      opt.textContent = `${flagEmoji(iso)} ${d.country_calling_code}`;
-      opt.title = d.country_name || iso;
-      dial.insertBefore(opt, dial.firstChild);
-    }
-    if(opt) dial.value = iso;
-  })
-  .catch(()=>{ /* лишається запасний варіант */ });
-
-/* =========================================================
-   ВІДПРАВКА ФОРМИ + ПОДІЯ "Lead" У META PIXEL
-   ========================================================= */
-const form = document.getElementById('leadForm');
-const phoneInput = document.getElementById('phone');
-const phoneErr = document.getElementById('phoneErr');
-const agree = document.getElementById('agree');
-const agreeErr = document.getElementById('agreeErr');
-
-const tguserInput = document.getElementById('tguser');
-let leadFired = false;
-
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-
-  // Контакт: телефон АБО нік у Telegram — досить одного з двох
-  const national = phoneInput.value.replace(/\D/g,'');
-  const nick = tguserInput.value.trim();
-  const hasPhone = national.length >= 6;
-  const hasNick  = nick.replace(/[@\s]/g,'').length >= 2;
-
-  let ok = true;
-  if(!hasPhone && !hasNick){
-    phoneInput.classList.add('err'); phoneErr.classList.add('on'); ok = false;
-  } else { phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); }
-
-  if(!agree.checked){ agreeErr.classList.add('on'); ok = false; }
-  else { agreeErr.classList.remove('on'); }
-
-  if(!ok) return;
-  if(leadFired) return;   // Lead рівно 1 раз, без дублів
-
-  const selOpt = dial.options[dial.selectedIndex];
-  const dialCode = selOpt ? selOpt.dataset.dial : '';
-
-  answers.name = document.getElementById('name').value.trim() || '—';
-  answers.phone = hasPhone ? `${dialCode} ${phoneInput.value.trim()}` : '—';
-  answers.tg = hasNick ? (nick[0]==='@'?nick:'@'+nick) : '—';
-  answers.country = dial.value.toUpperCase();
-  answers.type = 'paid';
-
-  // ⭐ КЛЮЧОВЕ: подія Lead саме в момент відправки форми.
-  // Форму бачать ТІЛЬКИ ті, хто готовий платити або хоче розстрочку —
-  // халявщики йдуть на екран Telegram і Lead не викликають зовсім.
-  // value відрізняє "гарячого" ліда від "розстрочки", щоб Meta шукала більше платоспроможних.
-  // 👉 За бажанням заміни 2 і 1 на реальну очікувану цінність ліда (напр. середній чек × конверсію).
-  leadFired = true;
-  if(typeof fbq === 'function'){
-    const leadValue = answers.q3 === 'Готова діяти заради результату' ? 2 : 1;
-    fbq('track', 'Lead', {
-      content_name: 'TikTok консультація',
-      value: leadValue,
-      currency: 'EUR',
-      lead_type: answers.q3   // "Готова діяти..." або "Готова, якщо є розстрочка"
-    });
+  function closeQuiz(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
   }
 
-  // Показуємо подяку одразу
-  document.getElementById('tyName').textContent = answers.name !== '—' ? answers.name : 'друже';
-  go('thankyou');
+  document.querySelectorAll('[data-quiz]').forEach(el => el.addEventListener('click', openQuiz));
+  closeBt.addEventListener('click', closeQuiz);
+  modal.addEventListener('click', e => { if(e.target === modal) closeQuiz(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeQuiz(); });
+  // Квіз усередині попапа просить закритися (кнопка «Назад» з 1-го питання)
+  window.addEventListener('message', e => { if(e.data === 'quizClose') closeQuiz(); });
 
-  // Надсилаємо заявку в Telegram (через серверну функцію)
-  try{
-    await fetch('/api/lead', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(answers)
-    });
-  }catch(err){ /* не блокуємо користувача */ }
-});
+  // ── Відео-відгуки: відкриваємо у плеєрі на сторінці ──
+  const vmodal  = document.getElementById('videoModal');
+  const revVideo= document.getElementById('revVideo');
+  const vClose  = document.getElementById('videoClose');
+  function openVideo(src, poster){
+    revVideo.src = src;
+    if(poster) revVideo.poster = poster;
+    vmodal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    revVideo.play().catch(()=>{});
+  }
+  function closeVideo(){
+    revVideo.pause();
+    revVideo.removeAttribute('src'); revVideo.load();
+    vmodal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-video]').forEach(el =>
+    el.addEventListener('click', () => openVideo(el.dataset.video, el.dataset.poster)));
+  vClose.addEventListener('click', closeVideo);
+  vmodal.addEventListener('click', e => { if(e.target === vmodal) closeVideo(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && vmodal.classList.contains('open')) closeVideo(); });
 
-phoneInput.addEventListener('input', ()=>{ phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); });
-tguserInput.addEventListener('input', ()=>{ phoneInput.classList.remove('err'); phoneErr.classList.remove('on'); });
-
-/* Безкоштовна гілка: захоплюємо нік → подія FreeLead (окрема, НЕ Lead) */
-const freeForm = document.getElementById('freeForm');
-if(freeForm){
-  const freeTg = document.getElementById('freeTg');
-  const freeErr = document.getElementById('freeErr');
-  let freeLeadFired = false;
-  freeForm.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const nick = freeTg.value.trim();
-    if(nick.replace(/[@\s]/g,'').length < 2){ freeErr.classList.add('on'); return; }
-    freeErr.classList.remove('on');
-    if(freeLeadFired) return;
-    freeLeadFired = true;
-    if(typeof fbq === 'function') fbq('trackCustom', 'FreeLead');
-    const payload = { type:'free', tg: nick[0]==='@'?nick:'@'+nick, q1: answers.q1, q2: answers.q2, q3: answers.q3 };
-    go('freedone');
-    try{ await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); }catch(err){}
-  });
-  freeTg.addEventListener('input', ()=> freeErr.classList.remove('on'));
-}
-agree.addEventListener('change', ()=>{ if(agree.checked) agreeErr.classList.remove('on'); });
-
-/* =========================================================
-   МОДАЛКА ВІДЕОВІДГУКІВ
-   ========================================================= */
-const modal = document.getElementById('modal');
-const modalVideo = document.getElementById('modalVideo');
-document.querySelectorAll('.vid').forEach(v=>{
-  v.addEventListener('click', ()=>{
-    modalVideo.src = v.dataset.src.split('#')[0];   // завжди відтворюємо з початку
-    modal.classList.add('on');
-    modalVideo.currentTime = 0;
-    modalVideo.play().catch(()=>{});
-  });
-});
-// Підстраховка: щойно завантажились метадані — ставимо на 0 секунду
-modalVideo.addEventListener('loadedmetadata', ()=>{ try{ modalVideo.currentTime = 0; }catch(e){} });
-function closeModal(){
-  modal.classList.remove('on'); modalVideo.pause();
-  modalVideo.removeAttribute('src'); modalVideo.load();
-}
-document.getElementById('modalX').addEventListener('click', closeModal);
-modal.addEventListener('click', e=>{ if(e.target === modal) closeModal(); });
+  // Липка кнопка з'являється після прокрутки повз hero
+  const sticky = document.getElementById('sticky');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 620) sticky.classList.add('show');
+    else sticky.classList.remove('show');
+  }, {passive:true});
 </script>
+
 </body>
 </html>
