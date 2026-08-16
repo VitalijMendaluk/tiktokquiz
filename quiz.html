@@ -390,25 +390,25 @@
 
   <!-- ========== ПИТАННЯ 2 ========== -->
   <section class="screen" data-screen="q2">
-    <div class="q-title">Що ти хочеш отримувати з TikTok?</div>
-    <div class="q-hint">Уяви, що це вже працює — що для тебе найважливіше?</div>
+    <div class="q-title">У якій ніші ти хочеш отримувати клієнтів?</div>
+    <div class="q-hint">Обери найближче — так план буде точнішим під твою ситуацію</div>
     <div class="options" data-q="q2">
-      <button class="opt" data-val="Клієнтів на послуги"><span class="ic">💼</span> Клієнтів на послуги</button>
-      <button class="opt" data-val="Продажі товарів"><span class="ic">🛍️</span> Продажі товарів</button>
-      <button class="opt" data-val="Мережевий бізнес / Бади"><span class="ic">🤝</span> Мережевий бізнес / Бади</button>
-      <button class="opt" data-val="Просування особистого бренду"><span class="ic">🌟</span> Просування особистого бренду</button>
-      <button class="opt" data-val="Інше"><span class="ic">❓</span> Інше</button>
+      <button class="opt" data-val="Мережевий бізнес / БАДи / здоровʼя"><span class="ic">🤝</span> Мережевий бізнес / БАДи / здоровʼя</button>
+      <button class="opt" data-val="Коуч / консультант / психолог"><span class="ic">🧠</span> Коуч / консультант / психолог</button>
+      <button class="opt" data-val="Викладач / мови / навчання"><span class="ic">🎓</span> Викладач / мови / навчання</button>
+      <button class="opt" data-val="Послуги / краса / здоровʼя"><span class="ic">💼</span> Послуги / краса / здоровʼя</button>
+      <button class="opt" data-val="Товари / особистий бренд / інше"><span class="ic">🌟</span> Товари / особистий бренд / інше</button>
     </div>
   </section>
 
   <!-- ========== ПИТАННЯ 3 (з розгалуженням) ========== -->
   <section class="screen" data-screen="q3">
-    <div class="q-title">За нашим досвідом, результат потребує вкладень.<br>Готова/ий інвестувати час і гроші у свій TikTok?</div>
-    <div class="q-hint">Перший крок — безкоштовна консультація. Далі, за бажанням, платне навчання під твій бюджет 🙌</div>
+    <div class="q-title">Якщо після розбору побачиш чіткий шлях до заявок, ти готова/ий розглянути платне навчання?</div>
+    <div class="q-hint">Сам розбір безкоштовний. На ньому я покажу, що робити у твоїй ніші, а програму запропоную тільки якщо вона справді підходить під твою ціль і бюджет.</div>
     <div class="options" data-q="q3">
-      <button class="opt" data-route="form" data-track="paid_1" data-val="Готова діяти заради результату"><span class="ic">🚀</span> Так, я готова/ий діяти заради результату</button>
-      <button class="opt" data-route="form" data-track="paid_2" data-val="Готова, якщо є розстрочка"><span class="ic">💳</span> Так, якщо буде зручна розстрочка</button>
-      <button class="opt" data-route="tg" data-track="free" data-val="Цікавить лише безкоштовне"><span class="ic">🌱</span> Ні, поки цікавить лише безкоштовне</button>
+      <button class="opt" data-route="form" data-track="ready_paid" data-val="Готова/ий розглядати платне навчання, якщо бачу план"><span class="ic">🚀</span> Так, якщо побачу зрозумілий план і цінність для себе</button>
+      <button class="opt" data-route="form" data-track="ready_installment" data-val="Готова/ий розглядати навчання з розстрочкою"><span class="ic">💳</span> Так, але мені важлива зручна оплата або розстрочка</button>
+      <button class="opt" data-route="tg" data-track="free" data-val="Поки цікавить лише безкоштовне"><span class="ic">🌱</span> Поки хочу тільки безкоштовний матеріал</button>
     </div>
   </section>
 
@@ -525,6 +525,7 @@ const screens = [...document.querySelectorAll('.screen')];
 const validNames = screens.map(s => s.dataset.screen);   // intro, q1, q2, q3, form, tg, thankyou
 const answers = {};
 let current = 'intro';
+const inPopup = window.parent && window.parent !== window;
 
 const progress = document.getElementById('progress');
 const progFill = document.getElementById('progFill');
@@ -554,15 +555,27 @@ function go(name){
 window.addEventListener('hashchange', ()=> render((location.hash || '#intro').slice(1)));
 
 let quizStarted = false;
+function sendPixel(method, eventName, params = {}){
+  if(inPopup){
+    window.parent.postMessage({
+      source: 'tiktokQuiz',
+      type: 'track',
+      method,
+      event: eventName,
+      params
+    }, '*');
+    return;
+  }
+  if(typeof fbq === 'function') fbq(method, eventName, params);
+}
 function startQuiz(){
-  if(!quizStarted){ quizStarted = true; if(typeof fbq === 'function') fbq('trackCustom', 'QuizStart'); }
+  if(!quizStarted){ quizStarted = true; sendPixel('trackCustom', 'QuizStart'); }
   go('q1');
 }
 const startBtnEl = document.getElementById('startBtn');
 if(startBtnEl) startBtnEl.addEventListener('click', startQuiz);
 
 // Чи відкрито квіз у попапі лендінга (в iframe)
-const inPopup = window.parent && window.parent !== window;
 
 document.getElementById('backBtn').addEventListener('click', ()=>{
   // У попапі кнопка «Назад» з першого питання закриває вікно квіза
@@ -574,12 +587,12 @@ if(inPopup){
   // Попап: одразу стартуємо з Q1 (лендинг вже «прогрів»), QuizStart — на момент відкриття
   document.documentElement.classList.add('in-popup');
   quizStarted = true;
-  if(typeof fbq === 'function') fbq('trackCustom', 'QuizStart');
+  sendPixel('trackCustom', 'QuizStart');
   location.hash = 'q1';
   render('q1');
 } else {
   // Пряме відкриття квіза: шлемо PageView і показуємо інтро/поточний екран
-  if(typeof fbq === 'function') fbq('track', 'PageView');
+  sendPixel('track', 'PageView');
   render((location.hash || '#intro').slice(1));
 }
 
@@ -595,12 +608,12 @@ document.querySelectorAll('.options').forEach(group=>{
       answers[group.dataset.q] = opt.dataset.val;
 
       // Подія пікселя на кожне питання (з параметром обраного варіанту) — лише перший раз.
-      // Для Q3 параметр — paid_1 / paid_2 / free (data-track), щоб рахувати ціну фільтра.
+      // Для Q3 параметр показує якість фільтра: готовий лід, розстрочка або безкоштовна гілка.
       const qEvent = { q1:'Question_1', q2:'Question_2', q3:'Question_3' }[group.dataset.q];
-      if(qEvent && !firedQ[qEvent] && typeof fbq === 'function'){
+      if(qEvent && !firedQ[qEvent]){
         firedQ[qEvent] = true;
         const answerParam = group.dataset.q === 'q3' ? (opt.dataset.track || '') : opt.dataset.val;
-        fbq('trackCustom', qEvent, { answer: answerParam });
+        sendPixel('trackCustom', qEvent, { answer: answerParam });
       }
 
       if(group.dataset.q === 'q3'){
@@ -704,15 +717,19 @@ form.addEventListener('submit', async (e)=>{
   // value відрізняє "гарячого" ліда від "розстрочки", щоб Meta шукала більше платоспроможних.
   // 👉 За бажанням заміни 2 і 1 на реальну очікувану цінність ліда (напр. середній чек × конверсію).
   leadFired = true;
-  if(typeof fbq === 'function'){
-    const leadValue = answers.q3 === 'Готова діяти заради результату' ? 2 : 1;
-    fbq('track', 'Lead', {
-      content_name: 'TikTok консультація',
-      value: leadValue,
-      currency: 'EUR',
-      lead_type: answers.q3   // "Готова діяти..." або "Готова, якщо є розстрочка"
-    });
-  }
+  const leadValueMap = {
+    'Готова/ий розглядати платне навчання, якщо бачу план': 3,
+    'Готова/ий розглядати навчання з розстрочкою': 2
+  };
+  sendPixel('track', 'Lead', {
+    content_name: 'TikTok консультація',
+    content_category: 'paid_consultation',
+    value: leadValueMap[answers.q3] || 1,
+    currency: 'EUR',
+    lead_type: answers.q3,
+    niche: answers.q2,
+    tiktok_stage: answers.q1
+  });
 
   // Показуємо подяку одразу
   document.getElementById('tyName').textContent = answers.name !== '—' ? answers.name : 'друже';
@@ -743,7 +760,7 @@ if(freeForm){
     freeErr.classList.remove('on');
     if(freeLeadFired) return;
     freeLeadFired = true;
-    if(typeof fbq === 'function') fbq('trackCustom', 'FreeLead');
+    sendPixel('trackCustom', 'FreeLead');
     const payload = { type:'free', tg: nick[0]==='@'?nick:'@'+nick, q1: answers.q1, q2: answers.q2, q3: answers.q3 };
     go('freedone');
     try{ await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); }catch(err){}

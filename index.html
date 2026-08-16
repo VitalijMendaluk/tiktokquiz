@@ -74,6 +74,9 @@
     background:var(--grad-soft);border:1px solid var(--line);padding:8px 16px;border-radius:99px}
   .lead{color:#D2D3E0;font-size:clamp(17px,2.4vw,19px);font-weight:500;line-height:1.55}
   .sec-sub{color:#CFCFDB;text-align:center;max-width:640px;margin:14px auto 0;font-size:17px;line-height:1.55}
+  .audience-strip{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 4px;max-width:620px}
+  .audience-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid var(--line);
+    border-radius:99px;padding:8px 13px;font-size:14.5px;font-weight:800;color:#f3f4ff}
 
   /* ── Кнопка (фірмовий градієнт) ── */
   .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;
@@ -276,6 +279,13 @@
           <li>Без блогу і без підписників</li>
           <li>Навіть якщо починаєш з нуля</li>
         </ul>
+        <div class="audience-strip" aria-label="Для кого">
+          <span class="audience-pill">💼 коучі</span>
+          <span class="audience-pill">🧠 психологи</span>
+          <span class="audience-pill">🎓 викладачі</span>
+          <span class="audience-pill">🤝 мережевий бізнес</span>
+          <span class="audience-pill">📌 консультанти</span>
+        </div>
         <div class="chips">
           <span class="chip">👥 130+ учнів</span>
           <span class="chip"><span class="st">★</span> 4.9 за відгуками</span>
@@ -317,10 +327,10 @@
   <div class="wrap">
     <h2>Персональний розбір <span class="grad-text">для тебе</span>, якщо ти</h2>
     <div class="grid4">
-      <div class="fit-card"><div class="fit-ic">🚀</div><p>Починаєш з нуля і не розумієш, як перетворити TikTok у джерело клієнтів</p></div>
-      <div class="fit-card"><div class="fit-ic">🎬</div><p>Втомився знімати відео без результату і хочеш чітку стратегію, що реально продає</p></div>
-      <div class="fit-card"><div class="fit-ic">💡</div><p>Маєш знання або продукт, але не знаєш, як правильно продати це в інтернеті</p></div>
-      <div class="fit-card"><div class="fit-ic">📈</div><p>Хочеш побудувати стабільний потік клієнтів у своїй ніші — без платної реклами</p></div>
+      <div class="fit-card"><div class="fit-ic">🤝</div><p>Займаєшся мережевим бізнесом, БАДами або напрямом здоровʼя і хочеш заявки без нав'язування в особисті</p></div>
+      <div class="fit-card"><div class="fit-ic">🧠</div><p>Ти коуч, консультант, психолог або експерт і хочеш продавати консультації через довіру</p></div>
+      <div class="fit-card"><div class="fit-ic">🎓</div><p>Викладаєш мови, навчаєш або маєш освітній продукт і хочеш стабільний потік учнів</p></div>
+      <div class="fit-card"><div class="fit-ic">📈</div><p>Маєш послугу чи особистий бренд і хочеш перші заявки, продажі на €500+ або масштабування</p></div>
     </div>
     <div class="cta-center"><button class="cta" data-quiz>Це про мене — записатися</button></div>
   </div>
@@ -392,8 +402,8 @@
     <h2>Хто я <span class="grad-text">і як працює</span> моя система</h2>
     <div class="bio-grid">
       <div class="bio-card">
-        <p>Привіт! Я <b>Віталій Мендалюк</b>. Понад <b>4 роки</b> працюю в маркетингу й за цей час пройшов <b>десятки ніш, продуктів і стратегій</b>, щоб зрозуміти головне: бізнес росте тоді, коли система працює на тебе, а не ти на систему. У моєму портфоліо багато кейсів, де люди <b>стартували з нуля</b> й виходили на стабільний дохід, масштабували проєкти та збільшували оборот. Саме цей досвід я тепер вкладаю у свою <b>систему роботи з TikTok</b>.</p>
-        <p>Тепер я хочу допомогти тобі зробити те саме — швидше і без помилок, які колись робив я сам. Покажу, як упакувати себе так, щоб викликати довіру, і як створювати контент, що <b>не просто набирає перегляди, а приводить реальних клієнтів</b>. Моя задача — не навчити тебе «знімати відео», а дати механіку, яка перетворює TikTok на робочий бізнес-інструмент.</p>
+        <p>Привіт! Я <b>Віталій Мендалюк</b>. Понад <b>4 роки</b> працюю в маркетингу й допомагаю експертам, викладачам, консультантам, психологам та людям у мережевому бізнесі перетворювати TikTok на джерело заявок.</p>
+        <p>За моєю системою вже навчались <b>130+ людей</b> у різних нішах: від мовних викладачів і коучів до напряму здоровʼя та особистих брендів. Моя задача — не просто навчити тебе знімати відео, а дати <b>покрокову механіку на 30 днів</b>: що говорити, як упакувати профіль і як довести людину від перегляду до заявки.</p>
       </div>
       <div class="bio-photo">
         <picture>
@@ -481,6 +491,21 @@
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('open')) closeQuiz(); });
   // Квіз усередині попапа просить закритися (кнопка «Назад» з 1-го питання)
   window.addEventListener('message', e => { if(e.data === 'quizClose') closeQuiz(); });
+  const quizPixelEvents = new Set();
+  window.addEventListener('message', e => {
+    if(!e.data || e.data.source !== 'tiktokQuiz') return;
+    if(typeof fbq !== 'function') return;
+    if(e.data.type === 'track'){
+      const key = [
+        e.data.method || 'trackCustom',
+        e.data.event,
+        JSON.stringify(e.data.params || {})
+      ].join('|');
+      if(quizPixelEvents.has(key)) return;
+      quizPixelEvents.add(key);
+      fbq(e.data.method || 'trackCustom', e.data.event, e.data.params || {});
+    }
+  });
 
   // ── Відео-відгуки: відкриваємо у плеєрі на сторінці ──
   const vmodal  = document.getElementById('videoModal');
