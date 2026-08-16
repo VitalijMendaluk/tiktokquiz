@@ -721,14 +721,16 @@ form.addEventListener('submit', async (e)=>{
     'Готова/ий розглядати платне навчання, якщо бачу план': 3,
     'Готова/ий розглядати навчання з розстрочкою': 2
   };
+  // ВАЖЛИВО: тримаємо параметри Lead КОРОТКИМИ.
+  // Meta-піксель шле GET-запит через <img>; довгі кириличні значення в URL-кодуванні
+  // роздуваються ×3 і перевищують ліміт довжини URL (~2КБ) — тоді запит не відправляється
+  // і подія Lead «мовчки» зникає. Детальні відповіді (ніша/етап/готовність) і так ідуть
+  // у Telegram (/api/lead) та в подіях Question_1/2/3, тому тут їх НЕ дублюємо.
   sendPixel('track', 'Lead', {
     content_name: 'TikTok консультація',
     content_category: 'paid_consultation',
     value: leadValueMap[answers.q3] || 1,
-    currency: 'EUR',
-    lead_type: answers.q3,
-    niche: answers.q2,
-    tiktok_stage: answers.q1
+    currency: 'EUR'
   });
 
   // Показуємо подяку одразу
