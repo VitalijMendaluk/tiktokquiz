@@ -112,19 +112,22 @@
     border-radius:99px;padding:9px 15px;font-size:15px;font-weight:700;color:#eff0fa}
   .chip .st{color:var(--gold)}
   .hero-cta-row{display:flex;flex-direction:column;gap:0}
-  /* Відео/візуал справа */
+  /* Головне відео (прев'ю-прямокутник; по кліку — вертикальний плеєр, як TikTok) */
   .hero-media{position:relative}
-  .media-frame{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);
-    background:linear-gradient(160deg,#171728,#0d0d18);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 30px 80px -30px rgba(37,244,238,.35)}
-  .media-frame .ph-svg{width:100%;height:100%;position:absolute;inset:0}
-  .play-badge{position:relative;z-index:2;width:82px;height:82px;border-radius:50%;background:var(--grad);
-    display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -6px rgba(254,44,85,.6)}
-  .play-badge::before{content:"";border-style:solid;border-width:15px 0 15px 24px;border-color:transparent transparent transparent #fff;margin-left:5px}
-  .media-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;font-size:13px;font-weight:700;color:#dcdcf0;
-    background:linear-gradient(180deg,transparent,rgba(0,0,0,.75))}
-  .media-tag{position:absolute;top:14px;left:14px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-    color:#0A0A12;background:var(--cyan);padding:5px 10px;border-radius:8px}
+  .hero-video{position:relative;display:block;width:100%;border:none;padding:0;cursor:pointer;
+    border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:#0d0d18;
+    box-shadow:0 30px 80px -30px rgba(37,244,238,.4);transition:transform .15s ease}
+  .hero-video:hover{transform:translateY(-3px)}
+  .hero-video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 28%}
+  .hv-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12) 40%,rgba(0,0,0,.62))}
+  .play-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:74px;height:74px;border-radius:50%;
+    background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -6px rgba(254,44,85,.6);
+    animation:playPulse 2s ease-in-out infinite}
+  @keyframes playPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.09)}}
+  .play-badge::before{content:"";border-style:solid;border-width:14px 0 14px 22px;border-color:transparent transparent transparent #fff;margin-left:5px}
+  .hv-tag{position:absolute;top:13px;left:13px;z-index:2;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:#0A0A12;background:var(--cyan);padding:6px 11px;border-radius:8px}
+  .hv-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 16px 15px;font-size:15px;font-weight:800;color:#fff;text-align:center}
 
   /* ── Картки «для тебе» ── */
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}
@@ -250,14 +253,16 @@
     .grid4{gap:14px}
     .cta{width:100%;max-width:460px}
     .cta-center{margin-top:26px}
-    /* Герой: заголовок → булети → чипи → КНОПКА видимі без прокрутки.
-       Порожній блок відео (заглушка) ховаємо, щоб не гнати крізь пусту рамку
-       і не відсувати кнопку вниз. Повернемо, коли заллємо ролик. */
+    /* Герой на мобільному: заголовок → булети → чипи → КНОПКА, а нижче — відео-прев'ю
+       (прямокутник, як відгуки; по кліку відкривається вертикальним плеєром). */
     .hero{padding-top:26px;padding-bottom:34px}
     .hero h1{margin:12px 0 14px}
     .hero-bul{margin:16px 0 18px;gap:10px}
-    .chips{margin:18px 0 22px}
-    .hero-media{display:none}
+    .chips{margin:18px 0 20px}
+    .hero-media{width:100%;max-width:300px;justify-self:center;margin-top:20px}
+    .hero-video{aspect-ratio:1/1.15}
+    .play-badge{width:64px;height:64px}
+    .hv-cap{font-size:14px}
     /* Бейдж коуча: на мобільному — у два рядки з написаним досвідом */
     .br-d{display:none}
     .br-m{display:inline;line-height:1.55}
@@ -299,26 +304,13 @@
         </div>
       </div>
       <div class="hero-media">
-        <div class="media-frame" data-quiz role="button" aria-label="Записатися">
-          <svg class="ph-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#25F4EE" stop-opacity=".22"/>
-                <stop offset="1" stop-color="#FE2C55" stop-opacity=".22"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="500" fill="url(#g1)"/>
-            <g opacity=".9">
-              <rect x="150" y="120" width="100" height="200" rx="18" fill="#0d0d18" stroke="#2a2a3e"/>
-              <rect x="160" y="150" width="80" height="120" rx="8" fill="#171728"/>
-              <polyline points="168,250 190,220 210,235 232,190" fill="none" stroke="#25F4EE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="232" cy="190" r="5" fill="#FE2C55"/>
-            </g>
-          </svg>
-          <div class="media-tag">Відео коуча</div>
-          <div class="play-badge"></div>
-          <div class="media-cap">▶ Тут буде відео Віталія · 30–60 сек</div>
-        </div>
+        <button class="hero-video" type="button" data-video="videos/golovne.mp4" data-poster="videos/golovne-poster.webp" aria-label="Дивитись відео">
+          <img src="videos/golovne-poster.webp" alt="Відео Віталія — як це працює" loading="lazy" decoding="async">
+          <span class="hv-veil"></span>
+          <span class="hv-tag">▶ Відео · 1 хв</span>
+          <span class="play-badge"></span>
+          <span class="hv-cap">Подивись, як це працює 👇</span>
+        </button>
       </div>
     </div>
   </div>
