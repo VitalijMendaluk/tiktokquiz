@@ -100,15 +100,7 @@
 
   /* ── HERO ── */
   .hero{padding-top:46px;padding-bottom:52px}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;column-gap:44px;align-items:start;
-    grid-template-areas:"eyebrow media" "title media" "bul media" "aud media" "chips media" "cta media"}
-  .hero-grid > .eyebrow{grid-area:eyebrow}
-  .hero-grid > h1{grid-area:title}
-  .hero-grid > .hero-bul{grid-area:bul}
-  .hero-grid > .audience-strip{grid-area:aud}
-  .hero-grid > .chips{grid-area:chips}
-  .hero-grid > .hero-cta-row{grid-area:cta}
-  .hero-media{grid-area:media;align-self:center}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
   .hero h1{font-size:clamp(30px,6vw,52px);margin:18px 0 16px}
   .hero .lead{max-width:520px}
   .hero-bul{list-style:none;margin:20px 0 22px;display:flex;flex-direction:column;gap:11px;max-width:540px}
@@ -247,15 +239,8 @@
 
   /* ── Адаптив ── */
   @media (max-width:960px){
-    /* Мобільний/планшет: порядок заголовок → відео → кнопка, решта — нижче */
-    .hero-grid{display:flex;flex-direction:column;gap:0;grid-template-areas:none;align-items:stretch}
-    .hero-grid > .eyebrow{order:1;align-self:flex-start}
-    .hero-grid > h1{order:2}
-    .hero-media{order:3;width:100%;max-width:320px;align-self:center;margin:16px auto 2px}
-    .hero-grid > .hero-cta-row{order:4;margin-top:20px}
-    .hero-grid > .hero-bul{order:5;margin-top:26px}
-    .hero-grid > .audience-strip{order:6}
-    .hero-grid > .chips{order:7}
+    .hero-grid{grid-template-columns:1fr;gap:26px}
+    .hero-media{width:100%;max-width:420px;justify-self:center;margin-top:6px}
     .grid4{grid-template-columns:repeat(2,1fr)}
     .bio-grid{grid-template-columns:1fr}
     .bio-photo{width:100%;max-width:360px;justify-self:center;aspect-ratio:1/1}
@@ -268,15 +253,15 @@
     .grid4{gap:14px}
     .cta{width:100%;max-width:460px}
     .cta-center{margin-top:26px}
-    /* Герой на мобільному: заголовок → ВІДЕО → кнопка на першому екрані; решта нижче */
-    .hero{padding-top:22px;padding-bottom:34px}
-    .hero h1{margin:12px 0 4px}
-    .hero-media{max-width:270px;margin:14px auto 2px}
-    .hero-video{aspect-ratio:1/1.15}
-    .play-badge{width:60px;height:60px}
+    /* Герой на мобільному: як було (відео внизу hero); прев'ю — широке, як картки відгуків */
+    .hero{padding-top:26px;padding-bottom:34px}
+    .hero h1{margin:12px 0 14px}
+    .hero-bul{margin:16px 0 18px;gap:10px}
+    .chips{margin:18px 0 20px}
+    .hero-media{max-width:none;margin-top:22px}
+    .hero-video{aspect-ratio:1/.62}
+    .play-badge{width:64px;height:64px}
     .hv-cap{font-size:14px}
-    .hero-bul{margin:0;gap:10px}
-    .chips{margin:16px 0 4px}
     /* Бейдж коуча: на мобільному — у два рядки з написаним досвідом */
     .br-d{display:none}
     .br-m{display:inline;line-height:1.55}
@@ -292,6 +277,7 @@
   <div class="glow red" style="width:380px;height:380px;top:40px;right:-160px"></div>
   <div class="wrap">
     <div class="hero-grid">
+      <div>
         <span class="eyebrow">🌍 TikTok для українців за кордоном</span>
         <h1>Як за <span class="grad-text">30 днів</span> отримати перших клієнтів з <span class="grad-text">TikTok у Європі</span> 🔥</h1>
         <ul class="hero-bul">
@@ -315,6 +301,7 @@
           <button class="cta big" data-quiz>Записатися</button>
           <p class="cta-note">Беру лише <b>5 людей на тиждень</b></p>
         </div>
+      </div>
       <div class="hero-media">
         <button class="hero-video" type="button" data-video="videos/golovne.mp4" data-poster="videos/golovne-poster.webp" aria-label="Дивитись відео">
           <img src="videos/golovne-poster.webp" alt="Відео Віталія — як це працює" loading="lazy" decoding="async">
